@@ -1,6 +1,5 @@
-## kdb-fe
-
-> ng2 admin master theme, build with angular-cli, compile with bootstrap 、ng2-charts and ng2-smart-table. Special Admin Theme for small, medium and large webapp with very clean and aesthetic style and feel.
+## kdb
+kdb, build with angular-cli, compile with bootstrap 、ng2-charts and ng2-smart-table. 
 
 1 Install node.js and angular-cli
 Download address：http://nodejs.cn/download/
