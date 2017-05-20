@@ -1,0 +1,41 @@
+<p>
+  单品销售情况查询
+</p>
+<div class="row">
+  <!--
+  <div class="col-md-6">
+
+    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
+      [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
+    </canvas>
+  </div>
+  -->
+  <div class="col-md-6" style="margin-bottom: 10px;">
+    <form class="form-inline" role="form">
+      <div class="form-group">
+        <label class="form-label">ISBN</label>
+        <input type="text" class="form-control">
+
+        <div class="input-append date form_datetime">
+          <input size="16" type="text" value="" readonly>
+          <span class="add-on"><i class="icon-th"></i></span>
+        </div>
+
+        <script type="text/javascript">
+          $(".form_datetime").datetimepicker({
+            format: "dd MM yyyy - hh:ii"
+          });
+        </script>
+      </div>
+    </form>
+    <table class="table table-responsive table-condensed">
+      <tr>
+        <th *ngFor="let label of lineChartLabels">{{label}}</th>
+      </tr>
+      <tr *ngFor="let d of lineChartData">
+        <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
+      </tr>
+    </table>
+    <button (click)="randomize()">CLICK</button>
+  </div>
+</div>

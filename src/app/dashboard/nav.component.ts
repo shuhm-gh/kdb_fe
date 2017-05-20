@@ -18,6 +18,7 @@ export class NavComponent implements OnInit {
   public lineCharts = "";
   public lineCharts2 = "";
   public lineCharts3 = "";
+  public lineCharts4 = "";
   //public pieCharts = "";
   //public dashboard = "";
   //public datatable = "";
@@ -37,6 +38,7 @@ export class NavComponent implements OnInit {
     this.lineCharts = "/main/lineCharts";
     this.lineCharts2 = "/main/lineCharts";
     this.lineCharts3 = "/main/lineCharts";
+    this.lineCharts4 = "/main/lineCharts";
     //this.pieCharts = "/main/"+this.para+"/pieCharts";
     //this.dashboard = "/main/"+this.para+"/dashboard";
     //this.datatable = "/main/"+this.para+"/datatable";
@@ -53,7 +55,7 @@ export class NavComponent implements OnInit {
         //href: 'charts',
         //name: "Charts",
         type: false,
-        href: this.lineCharts, name: "单品"
+        href: this.lineCharts, name: "单品销售情况查询"
         //child: [
         //  {href: this.lineCharts, name: "Line Charts"},
         //  {href: this.pieCharts, name: "Pie Charts"}
@@ -63,7 +65,7 @@ export class NavComponent implements OnInit {
         //href: 'charts',
         //name: "Charts",
         type: false,
-        href: this.lineCharts2, name: "竞品"
+        href: this.lineCharts2, name: "单品销售情况查询"
         //child: [
         //  {href: this.lineCharts, name: "Line Charts"},
         //  {href: this.pieCharts, name: "Pie Charts"}
@@ -73,7 +75,17 @@ export class NavComponent implements OnInit {
         //href: 'charts',
         //name: "Charts",
         type: false,
-        href: this.lineCharts3, name: "告警"
+        href: this.lineCharts3, name: "竞品情况比较"
+        //child: [
+        //  {href: this.lineCharts, name: "Line Charts"},
+        //  {href: this.pieCharts, name: "Pie Charts"}
+        //]
+      },
+      {
+        //href: 'charts',
+        //name: "Charts",
+        type: false,
+        href: this.lineCharts4, name: "特殊表现监控"
         //child: [
         //  {href: this.lineCharts, name: "Line Charts"},
         //  {href: this.pieCharts, name: "Pie Charts"}

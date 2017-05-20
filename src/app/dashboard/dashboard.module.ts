@@ -10,7 +10,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 
 import { NavComponent } from './nav.component';
 //import { DashboardComponent } from './dashboard.component';
-import { lineChartsComponent } from '../charts/lineCharts/lineCharts.component';
+import { lineChartsComponent } from '../charts/lineCharts/book-m_shop-m_data-table.component';
 //import { pieChartsComponent } from '../charts/pieCharts/pieCharts.component';
 //import { DatatableComponent } from '../tables/datatable/datatable.component';
 //import { BootstrapComponent } from '../bootstraps/static/bootstrap.component';

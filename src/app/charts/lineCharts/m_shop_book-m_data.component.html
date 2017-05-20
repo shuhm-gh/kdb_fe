@@ -3,6 +3,13 @@
 </p>
 <div class="row">
   <div class="col-md-6">
+    <form class="form-inline" role="form">
+      <div class="form-group">
+        <label class="form-label">Search</label>
+        <input type="text" class="form-control">
+      </div>
+    </form>
+
     <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
       [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
     </canvas>
