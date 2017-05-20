@@ -9,15 +9,15 @@ const appRoutes: Routes = [
     path: '',
     component: LoginComponent
   },
-  //{
-  //  path: 'content',
-  //  component: NavComponent,
-  //  children: [
-  //    //{ path: '', component: DashboardComponent },
-  //    //{ path: 'dashboard', component: DashboardComponent },
-  //    { path: 'lineCharts', component: lineChartsComponent },
-  //  ]
-  //},
+  {
+    path: 'content',
+    component: NavComponent,
+    children: [
+      //{ path: '', component: DashboardComponent },
+      //{ path: 'dashboard', component: DashboardComponent },
+      //{ path: 'lineCharts', component: lineChartsComponent },
+    ]
+  },
   {
     path: '**',
     component: LoginComponent

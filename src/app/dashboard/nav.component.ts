@@ -15,10 +15,10 @@ export class NavComponent implements OnInit {
 
   para = '';
 
-  public lineCharts = "";
-  public lineCharts2 = "";
-  public lineCharts3 = "";
-  public lineCharts4 = "";
+  public bookM_shopM_dataTable = "";
+  public m_shop_bookM_dataCharts = "";
+  public shop_bookM_dataCharts = "";
+  public monitor = "";
   //public pieCharts = "";
   //public dashboard = "";
   //public datatable = "";
@@ -35,10 +35,10 @@ export class NavComponent implements OnInit {
       this.para = params['id'];
     });
 
-    this.lineCharts = "/main/lineCharts";
-    this.lineCharts2 = "/main/lineCharts";
-    this.lineCharts3 = "/main/lineCharts";
-    this.lineCharts4 = "/main/lineCharts";
+    this.bookM_shopM_dataTable = "/main/bookM_shopM_dataTable";
+    this.m_shop_bookM_dataCharts = "/main/m_shop_bookM_dataCharts";
+    this.shop_bookM_dataCharts = "/main/shop_bookM_dataCharts";
+    this.monitor = "/main/monitor";
     //this.pieCharts = "/main/"+this.para+"/pieCharts";
     //this.dashboard = "/main/"+this.para+"/dashboard";
     //this.datatable = "/main/"+this.para+"/datatable";
@@ -55,7 +55,7 @@ export class NavComponent implements OnInit {
         //href: 'charts',
         //name: "Charts",
         type: false,
-        href: this.lineCharts, name: "单品销售情况查询"
+        href: this.bookM_shopM_dataTable, name: "单品销售情况查询"
         //child: [
         //  {href: this.lineCharts, name: "Line Charts"},
         //  {href: this.pieCharts, name: "Pie Charts"}
@@ -65,7 +65,7 @@ export class NavComponent implements OnInit {
         //href: 'charts',
         //name: "Charts",
         type: false,
-        href: this.lineCharts2, name: "单品销售情况查询"
+        href: this.m_shop_bookM_dataCharts, name: "竞品情况比较"
         //child: [
         //  {href: this.lineCharts, name: "Line Charts"},
         //  {href: this.pieCharts, name: "Pie Charts"}
@@ -75,7 +75,7 @@ export class NavComponent implements OnInit {
         //href: 'charts',
         //name: "Charts",
         type: false,
-        href: this.lineCharts3, name: "竞品情况比较"
+        href: this.shop_bookM_dataCharts, name: "单品销售情况查询"
         //child: [
         //  {href: this.lineCharts, name: "Line Charts"},
         //  {href: this.pieCharts, name: "Pie Charts"}
@@ -85,7 +85,7 @@ export class NavComponent implements OnInit {
         //href: 'charts',
         //name: "Charts",
         type: false,
-        href: this.lineCharts4, name: "特殊表现监控"
+        href: this.monitor, name: "特殊表现监控"
         //child: [
         //  {href: this.lineCharts, name: "Line Charts"},
         //  {href: this.pieCharts, name: "Pie Charts"}

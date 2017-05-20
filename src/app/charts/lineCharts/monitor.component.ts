@@ -7,9 +7,9 @@ import { ChartsModule } from 'ng2-charts/ng2-charts';
 
 @Component({
   selector: 'app-charts',
-  templateUrl: './lineCharts.component.html',
+  templateUrl: './monitor.component.html',
 })
-export class lineChartsComponent implements OnInit {
+export class MonitorComponent implements OnInit {
 
   constructor(
     private parent: NavComponent,
@@ -18,7 +18,7 @@ export class lineChartsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.parent.setActiveByPath("charts", this.parent.lineCharts);
+    this.parent.setActiveByPath("charts", this.parent.monitor);
   };
 
 

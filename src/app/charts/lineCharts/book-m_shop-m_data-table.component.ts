@@ -4,21 +4,24 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgClass } from '@angular/common';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import {DatepickerModule} from 'ng2-bootstrap';
 
 @Component({
   selector: 'app-charts',
   templateUrl: './book-m_shop-m_data-table.component.html',
 })
-export class lineChartsComponent implements OnInit {
-
+export class BookM_shopM_dataTableComponent implements OnInit {
+  date:Date;
   constructor(
     private parent: NavComponent,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {
+    this.date = new Date();
+  }
 
   ngOnInit() {
-    this.parent.setActiveByPath("charts", this.parent.lineCharts);
+    this.parent.setActiveByPath("charts", this.parent.bookM_shopM_dataTable);
   };
 
 

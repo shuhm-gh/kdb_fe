@@ -11,23 +11,20 @@
   </div>
   -->
   <div class="col-md-6" style="margin-bottom: 10px;">
-    <form class="form-inline" role="form">
-      <div class="form-group">
-        <label class="form-label">ISBN</label>
-        <input type="text" class="form-control">
-
-        <div class="input-append date form_datetime">
-          <input size="16" type="text" value="" readonly>
-          <span class="add-on"><i class="icon-th"></i></span>
-        </div>
-
-        <script type="text/javascript">
-          $(".form_datetime").datetimepicker({
-            format: "dd MM yyyy - hh:ii"
-          });
-        </script>
+    <div class="row">
+      <div class="col-xs-4">
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <label class="form-label">ISBN</label>
+            <input type="text" class="form-control">
+          </div>
+        </form>
       </div>
-    </form>
+      <div class="col-xs-1">
+        <fx-datepicker [id]="'demo-date'" [value]="date"></fx-datepicker>
+      </div>
+    </div>
+
     <table class="table table-responsive table-condensed">
       <tr>
         <th *ngFor="let label of lineChartLabels">{{label}}</th>
