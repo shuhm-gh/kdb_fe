@@ -10,21 +10,37 @@
     </canvas>
   </div>
   -->
-  <div class="col-md-6" style="margin-bottom: 10px;">
-    <div class="row">
-      <div class="col-xs-4">
-        <form class="form-inline" role="form">
-          <div class="form-group">
-            <label class="form-label">ISBN</label>
-            <input type="text" class="form-control">
-          </div>
-        </form>
-      </div>
-      <div class="col-xs-1">
-        <fx-datepicker [id]="'demo-date'" [value]="date"></fx-datepicker>
-      </div>
+
+  <div class="row">
+    <div class="col-xs-2">
+      <form class="form-inline" role="form">
+        <div class="form-group">
+          <label class="form-label">ISBN</label>
+          <input type="text" class="form-control" style="width: 150px;">
+        </div>
+      </form>
     </div>
 
+    <div class="col-xs-2">
+      <fx-datepicker [id]="'demo-date'" [value]="date"></fx-datepicker>
+    </div>
+
+    <div class="col-xs-1">
+      <select class="selectpicker" style="width: 80px; height: 30px;">
+        <option>模板一</option>
+        <option>模板二</option>
+        <option>模板三</option>
+      </select>
+    </div>
+
+    <div class="col-xs-2">
+      <button type="button" class="btn btn-danger custom-button-width .navbar-right">保存模板</button>
+      <button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="randomize()">查询</button>
+      <!--<span class="btn btn-primary" onclick="randomize()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Update</span>-->
+    </div>
+  </div>
+
+  <div class="col-md-6" style="margin-bottom: 10px;">
     <table class="table table-responsive table-condensed">
       <tr>
         <th *ngFor="let label of lineChartLabels">{{label}}</th>
@@ -33,6 +49,7 @@
         <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
       </tr>
     </table>
-    <button (click)="randomize()">CLICK</button>
   </div>
+
+
 </div>
