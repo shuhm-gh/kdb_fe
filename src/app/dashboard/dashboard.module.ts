@@ -10,7 +10,7 @@ import { FileUploadModule } from 'ng2-file-upload';
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import {TooltipModule, DatepickerModule} from 'ng2-bootstrap/ng2-bootstrap';
+import {TooltipModule, DatepickerModule} from 'ng2-bootstrap';
 import { FxDatepickerComponent }     from './datepicker.component';
 
 import { ClickOutsideModule}   from './ng2-click-outside.module';
