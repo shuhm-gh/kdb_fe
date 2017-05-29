@@ -1,29 +1,20 @@
-#指定运行环境
 language: node_js
-#指定nodejs版本，可以指定多个
 node_js:
-  - 6.10.3
-
+- 6.10.3
 before_script:
-  - npm install
- 
-#运行的脚本命令
+- npm install
 script:
-  - npm build
-
+- npm build
 after_script:
-  - cd dist
-  - git init
-  - git config user.name "kylin"
-  - git config user.email "shuhm.gg@gmail.com"
-  - git add -A
-  - git commit -m "update"
-  #- ssh root@shuhongming.com cd /opt/www/kdb_dist; git pull root@kylin-ux.com:/opt/www/kdb/dist master
-  #- scp -r ./dist root@shuhongming.com:/opt/www/kdb_dist
-  #- git push --force --quiet "https://${GH_TOKEN}@${GH_REF}" master:maste
-  #- ssh root@shuhongming.com cd /opt/www/kdb_dist; git pull https://github.com/shuhm-gh/kdb.git master
-  
-#指定分支，只有指定的分支提交时才会运行脚本
+- cd dist
+- git init
+- git config user.name "kylin"
+- git config user.email "shuhm.gg@gmail.com"
+- git add -A
+- git commit -m "update"
 branches:
   only:
-    - master
+  - master
+before_install:
+- openssl aes-256-cbc -K $encrypted_9d6a078f2a50_key -iv $encrypted_9d6a078f2a50_iv
+  -in travis.enc -out ~\/travis -d
