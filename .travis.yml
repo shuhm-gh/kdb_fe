@@ -6,12 +6,14 @@ before_script:
 script:
 - npm build
 after_script:
-- cd dist
-- git init
-- git config user.name "kylin"
-- git config user.email "shuhm.gg@gmail.com"
-- git add -A
-- git commit -m "update"
+- ssh root@kylin-ux.com cd /opt/www/kdb/; git pull; npm build
+#- cp -r dist/* root@kylin-ux.com:/opt/www/kdb/dist/
+#- cd dist
+#- git init
+#- git config user.name "kylin"
+#- git config user.email "shuhm.gg@gmail.com"
+#- git add -A
+#- git commit -m "update"
 branches:
   only:
   - master
