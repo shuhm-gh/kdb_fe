@@ -16,7 +16,4 @@ branches:
   only:
   - master
 before_install:
-- openssl aes-256-cbc -K $encrypted_9d6a078f2a50_key -iv $encrypted_9d6a078f2a50_iv
-  -in travis.enc -out .travis/travis -d
-- openssl aes-256-cbc -K $encrypted_9d6a078f2a50_key -iv $encrypted_9d6a078f2a50_iv
-  -in travis.enc -out ~\/travis -d
+- openssl aes-256-cbc -K $encrypted_9d6a078f2a50_key -iv $encrypted_9d6a078f2a50_iv -in travis.enc -out .travis/travis -d
