@@ -1,0 +1,24 @@
+language: node_js
+node_js:
+- 6.10.3
+#before_script:
+#- npm install
+script:
+#- npm build
+- ssh -i .travis/travis root@kylin-ux.com cd /opt/www/kdb/; git pull; npm build
+#after_script:
+#- cp -r dist/* root@kylin-ux.com:/opt/www/kdb/dist/
+#- cd dist
+#- git init
+#- git config user.name "kylin"
+#- git config user.email "shuhm.gg@gmail.com"
+#- git add -A
+#- git commit -m "update"
+branches:
+  only:
+  - master
+before_install:
+- openssl aes-256-cbc -K $encrypted_9d6a078f2a50_key -iv $encrypted_9d6a078f2a50_iv -in travis.enc -out .travis/travis -d
+- chmod 600 .travis/travis
+addons:
+  ssh_known_hosts: kylin-ux.com
