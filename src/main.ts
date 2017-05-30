@@ -7,4 +7,10 @@ if (environment.production) {
   enableProdMode();
 }
 
+import { HttpModule, XSRFStrategy, CookieXSRFStrategy, Http } from '@angular/http';
+
+export function IlmsCookieStrategy(http: Http) {
+  return new CookieXSRFStrategy('RESPONSE_TOKEN', 'X-CSRFToken');
+}
+
 platformBrowserDynamic().bootstrapModule(AppModule);

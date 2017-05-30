@@ -1,8 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { LocationStrategy, HashLocationStrategy } from '@angular/common';
+import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
+import { HttpModule, XSRFStrategy, Http } from '@angular/http';
+import { IlmsCookieStrategy } from '../main';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
@@ -13,6 +14,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
 
 import { DashboardModule } from './dashboard/dashboard.module';
+import { AlertService, AuthenticationService } from './_services/index';
 
 
 @NgModule({
@@ -30,7 +32,13 @@ import { DashboardModule } from './dashboard/dashboard.module';
     ChartsModule,
     DashboardModule
   ],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  //providers: [{ provide: XSRFStrategy, useValue: IlmsCookieStrategy} ],
+  providers: [
+    Location,
+    AlertService,
+    AuthenticationService,
+    {provide: LocationStrategy, useClass: PathLocationStrategy}],
+  //providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -5,34 +5,45 @@ import { Http, Response, Headers, RequestOptions } from '@angular/http';
 
 import { UserLogin } from './user';
 
+import { Router, ActivatedRoute } from '@angular/router';
+import {AlertService, AuthenticationService } from '../_services/index';
+//import { AuthenticationService } from '../_services/index';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
 })
 export class LoginComponent implements OnInit {
-
-
   ngOnInit() {
 
   };
 
-  @Input() xsrf_token: string;
+  //@Input() xsrf_token: string;
   @Output() log_signal = new EventEmitter();
   model = new UserLogin("", "", "", "");
   location: Location;
 
   submitted = false;
   login_result: any;
-  
-  constructor(private http: Http) { }
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private alertService: AlertService,
+    private authenticationService: AuthenticationService) { }
   onSubmit(f: NgForm) {
-    console.log('hello world ..........');
-    let posturl = location.protocol+'//'+location.hostname+':10000/api/login'
-    let body_login = f.value;
-    console.log(body_login);    
-    let headers = new Headers({ 'content-type': 'application/json', 'X-XSRFToken': f.value._xsrf });
-    let options = new RequestOptions({ headers: headers });
-    this.http.post(posturl, body_login, options).subscribe(response => {console.log(response.json()); this.login_result = response.json()}, error => {console.log(error.json() || "Server Errors!")});
+
+    this.authenticationService.login(this.model._username, this.model._password)
+      .subscribe(
+      data => {
+        //this.router.navigate([this.returnUrl]);
+        this.router.navigate(['main/bookM_shopM_dataTable']);
+      },
+      error => {
+        console.log(error)
+        this.alertService.error(error);
+        //this.loading = false;
+      });
   }
   clickReg() {
     this.log_signal.emit("logged");
