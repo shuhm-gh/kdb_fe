@@ -5,7 +5,7 @@ node_js:
 #- npm install
 script:
 #- npm build
-- ssh -i .travis/travis root@kylin-ux.com "cd /opt/www/kdb_fe/; git pull; ng build"
+- ssh -i .travis/travis root@kylin-ux.com "cd /opt/www/kdb_fe/; git pull; npm install; ng build"
 #after_script:
 #- cp -r dist/* root@kylin-ux.com:/opt/www/kdb/dist/
 #- cd dist
