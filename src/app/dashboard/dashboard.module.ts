@@ -12,6 +12,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import {TooltipModule, DatepickerModule} from 'ng2-bootstrap';
 import { FxDatepickerComponent }     from './datepicker.component';
+import { SelectModule } from 'ng2-select';
 
 import { ClickOutsideModule}   from './ng2-click-outside.module';
 
@@ -58,6 +59,7 @@ const tablesRoutes: Routes = [
         PaginationModule,
         Ng2SmartTableModule,
         FileUploadModule,
+        SelectModule,
         BrowserModule, TooltipModule, DatepickerModule.forRoot(), ClickOutsideModule
 
     ],

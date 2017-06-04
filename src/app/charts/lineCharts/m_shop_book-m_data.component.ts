@@ -26,30 +26,41 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public lineChartDataArray: Array<any> = [
     [
       { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' },
-      { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series C' }
     ],
     [
       { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
-      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series E' },
-      { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series F' }
     ],
     [
       { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series G' },
-      { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series H' },
-      { data: [18, 48, 77, 9, 100, 27, 40], label: 'Series I' }
     ],
-
+    [
+      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    ],
+    [
+      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
+    ],
+    [
+      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series G' },
+    ],
+    [
+      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    ],
+    [
+      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
+    ],
+    [
+      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    ]
   ];
 
-  public lineChartData1: Array<any> = [
-    {data:[], label:''}
+  public accounts: Array<any> = [
+    'zs', 'ls', 'ww'
   ];
+
   public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
   public lineChartOptions: any = {
     animation: false,
     responsive: true,
-    hide: true
   };
   public lineChartColours: Array<any> = [
     { // green
@@ -103,4 +114,39 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     console.log(e);
   }
 
+
+  public items:Array<string> = ['人民邮电出版社官方旗舰店', '新华文轩', '当当网'];
+  public items_book:Array<string> = ['软件工程', '操作系统', '计算机网络'];
+ 
+  private value:any = {};
+  private _disabledV:string = '0';
+  private disabled:boolean = false;
+ 
+  private disabledV():string {
+    return this._disabledV;
+  }
+  //private get disabledV():string {
+  //  return this._disabledV;
+  //}
+ 
+  //private set disabledV(value:string) {
+  //  this._disabledV = value;
+  //  this.disabled = this._disabledV === '1';
+  //}
+ 
+  public selected(value:any):void {
+    console.log('Selected value is: ', value);
+  }
+ 
+  public removed(value:any):void {
+    console.log('Removed value is: ', value);
+  }
+ 
+  public typed(value:any):void {
+    console.log('New search input: ', value);
+  }
+ 
+  public refreshValue(value:any):void {
+    this.value = value;
+  }
 }

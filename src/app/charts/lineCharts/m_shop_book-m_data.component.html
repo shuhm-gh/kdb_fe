@@ -1,22 +1,25 @@
 <div class="row">
-  <div class="col-xs-5">
-    <form class="form-inline" role="form">
-      <div class="form-group">
-        <label class="form-label">店铺</label>
-        <input type="text" class="form-control" style="width: 150px;">
-        <label class="form-label">ISBN</label>
-        <input type="text" class="form-control" style="width: 150px;">
-        <a href="/#/main/m_shop_bookM_dataCharts" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span>
-                <span class="sr-only">Add Price</span>
-            </a>
-        <!--<button type="button" class="btn btn-danger custom-button-width .navbar-right">添加</button>-->
-      </div>
-    </form>
+  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
+      <ng-select [allowClear]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)"
+        (removed)="removed($event)" (typed)="typed($event)" placeholder="店铺">
+      </ng-select>
+  </div>
+  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
+      <ng-select [allowClear]="true" [items]="items_book" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected($event)"
+        (removed)="removed($event)" (typed)="typed($event)" placeholder="ISBN">
+      </ng-select>
   </div>
 
   <div class="col-xs-1">
-    <select class="selectpicker" style="width: 80px; height: 30px;">
+
+        <a href="/main/m_shop_bookM_dataCharts" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span>
+                <span class="sr-only">Add Price</span>
+            </a>
+  </div>
+
+  <div class="col-xs-1">
+    <select class="selectpicker" data-live-search="true" style="width: 80px; height: 30px;">
         <option>售价</option>
         <option>折扣</option>
         <option>销量</option>
@@ -43,11 +46,9 @@
 <div class="row">
   <div *ngFor="let lineChartData of lineChartDataArray; let index=index; let odd=odd; let even=even;">
     <div *ngIf="even||odd">
-      <div class="form-group" class="col-md-6">
+      <div class="form-group" class="col-md-4">
         <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
-          [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"
-          style="width:2px; height:1px"
-          ng-hide="(lineChartData).length == 0">
+          [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
         </canvas>
       </div>
     </div>
