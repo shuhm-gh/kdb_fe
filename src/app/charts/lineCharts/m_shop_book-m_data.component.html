@@ -14,7 +14,7 @@
       </div>
     </form>
   </div>
-  
+
   <div class="col-xs-1">
     <select class="selectpicker" style="width: 80px; height: 30px;">
         <option>售价</option>
@@ -33,63 +33,23 @@
       </select>
   </div>
 
-    <div class="col-xs-2">
-      <button type="button" class="btn btn-danger custom-button-width .navbar-right">保存模板</button>
-      <button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="randomize()">查询</button>
-      <!--<span class="btn btn-primary" onclick="randomize()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Update</span>-->
+  <div class="col-xs-2">
+    <button type="button" class="btn btn-danger custom-button-width .navbar-right">保存模板</button>
+    <button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="randomize()">查询</button>
+    <!--<span class="btn btn-primary" onclick="randomize()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Update</span>-->
+  </div>
+</div>
+
+<div class="row">
+  <div *ngFor="let lineChartData of lineChartDataArray; let index=index; let odd=odd; let even=even;">
+    <div *ngIf="even||odd">
+      <div class="form-group" class="col-md-6">
+        <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
+          [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"
+          style="width:2px; height:1px"
+          ng-hide="(lineChartData).length == 0">
+        </canvas>
+      </div>
     </div>
-  </div>
-
-<div class="row">
-  <div class="col-md-4">
-    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
-      [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-    </canvas>
-  </div>
-  <div class="col-md-4">
-    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
-      [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-    </canvas>
-  </div>
-  <div class="col-md-4">
-    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
-      [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-    </canvas>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-4">
-    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
-      [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-    </canvas>
-  </div>
-  <div class="col-md-4">
-    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
-      [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-    </canvas>
-  </div>
-  <div class="col-md-4">
-    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
-      [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-    </canvas>
-  </div>
-</div>
-
-<div class="row">
-  <div class="col-md-4">
-    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
-      [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-    </canvas>
-  </div>
-  <div class="col-md-4">
-    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
-      [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-    </canvas>
-  </div>
-  <div class="col-md-4">
-    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
-      [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-    </canvas>
   </div>
 </div>
