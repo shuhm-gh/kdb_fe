@@ -24,38 +24,37 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
 
   // lineChart
   public lineChartDataArray: Array<any> = [
-    [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    ],
-    [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
-    ],
-    [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series G' },
-    ],
-    [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    ],
-    [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
-    ],
-    [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series G' },
-    ],
-    [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    ],
-    [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
-    ],
-    [
-      { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    ]
+    //[
+    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    //],
+    //[
+    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
+    //],
+    //[
+    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series G' },
+    //],
+    //[
+    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    //],
+    //[
+    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
+    //],
+    //[
+    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series G' },
+    //],
+    //[
+    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    //],
+    //[
+    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
+    //],
+    //[
+    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
+    //]
   ];
 
-  public accounts: Array<any> = [
-    'zs', 'ls', 'ww'
-  ];
+  public shop_select: string;
+  public book_select: string;
 
   public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
   public lineChartOptions: any = {
@@ -114,10 +113,22 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     console.log(e);
   }
 
+  
 
   public items:Array<string> = ['人民邮电出版社官方旗舰店', '新华文轩', '当当网'];
   public items_book:Array<string> = ['软件工程', '操作系统', '计算机网络'];
- 
+  public items_added_show: Array<string> = [];
+  public items_added: Array<string> = [];
+
+  public add(): void {
+    this.items_added.push(this.shop_select['text'] + '###' + this.book_select['text']);
+    console.log(this.items_added);
+  }
+
+  public refresh_selected() {
+    this.items_added_show = this.items_added;
+  }
+  
   private value:any = {};
   private _disabledV:string = '0';
   private disabled:boolean = false;
@@ -134,7 +145,14 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   //  this.disabled = this._disabledV === '1';
   //}
  
-  public selected(value:any):void {
+  public selected_shop(value:any):void {
+    this.shop_select = value;
+    //console.log('Selected value is: ', value);
+    console.log('Selected value is: ', this.shop_select);
+  }
+
+  public selected_book(value:any):void {
+    this.book_select = value;
     console.log('Selected value is: ', value);
   }
  
