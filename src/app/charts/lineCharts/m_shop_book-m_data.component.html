@@ -11,23 +11,17 @@
   </div>
 
   <div class="col-xs-1">
-
     <button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="add()">
         <!--a href="/main/m_shop_bookM_dataCharts" class="btn btn-default"-->
                 <span class="glyphicon glyphicon-plus"></span>
                 <span class="sr-only">Add Price</span></button>
   </div>
 
-  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
-    <ng-select [allowClear]="true" [items]="items_added_show" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected_book($event)"
-      (removed)="removed($event)" (typed)="typed($event)" placeholder="已添加">
-    </ng-select>
-  </div>
-
   <div class="col-xs-2">
-  <button (click)="refresh_selected()">
-    刷新已选
-  </button>
+  <select [(ngModel)]="item" style="width: 250px; height: 30px;">
+	    <option value="已添加" selected="已添加"></option>
+	    <option *ngFor="let n of items_added" [value]="n">{{n}}</option>
+    </select>
   </div>
 
   <div class="col-xs-1">

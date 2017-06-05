@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, ApplicationRef, NgZone } from '@angular/core';
 import { NavComponent } from '../../dashboard/nav.component';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgClass } from '@angular/common';
@@ -14,7 +14,10 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   constructor(
     private parent: NavComponent,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private cdRef:ChangeDetectorRef,
+    private appRef:ApplicationRef,
+    private zone:NgZone
   ) { }
 
   ngOnInit() {
@@ -119,14 +122,23 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public items_book:Array<string> = ['软件工程', '操作系统', '计算机网络'];
   public items_added_show: Array<string> = [];
   public items_added: Array<string> = [];
+  public item:string;
 
   public add(): void {
     this.items_added.push(this.shop_select['text'] + '###' + this.book_select['text']);
     console.log(this.items_added);
+    //
+    
   }
 
   public refresh_selected() {
     this.items_added_show = this.items_added;
+    console.log(this.items_added_show);
+    //this.appRef.tick();
+    //this.cdRef.detectChanges();
+    this.zone.run(() => {
+            console.log('enabled time travel');
+        });
   }
   
   private value:any = {};
@@ -166,5 +178,6 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
  
   public refreshValue(value:any):void {
     this.value = value;
+    console.log('refreshValue: ', this.value);
   }
 }
