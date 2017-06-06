@@ -120,12 +120,14 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
 
   public items:Array<string> = ['人民邮电出版社官方旗舰店', '新华文轩', '当当网'];
   public items_book:Array<string> = ['软件工程', '操作系统', '计算机网络'];
+  public tags: Array<string> = [];
   public items_added_show: Array<string> = [];
   public items_added: Array<string> = [];
   public item:string;
 
   public add(): void {
     this.items_added.push(this.shop_select['text'] + '###' + this.book_select['text']);
+    this.tags.push(this.shop_select['text'] + '###' + this.book_select['text']);
     console.log(this.items_added);
     //
     

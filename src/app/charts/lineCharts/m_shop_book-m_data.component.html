@@ -17,12 +17,14 @@
                 <span class="sr-only">Add Price</span></button>
   </div>
 
+  <!--
   <div class="col-xs-2">
   <select [(ngModel)]="item" style="width: 250px; height: 30px;">
 	    <option value="已添加" selected="已添加"></option>
 	    <option *ngFor="let n of items_added" [value]="n">{{n}}</option>
     </select>
   </div>
+  -->
 
   <div class="col-xs-1">
     <select class="selectpicker" data-live-search="true" style="width: 80px; height: 30px;">
@@ -60,3 +62,5 @@
     </div>
   </div>
 </div>
+
+<rl-tag-input [(ngModel)]="tags" placeholder="已添加"></rl-tag-input>
