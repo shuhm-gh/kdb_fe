@@ -26,6 +26,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
 
 
   // lineChart
+  public lineChartData: any = [{ data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' }];
   public lineChartDataArray: Array<any> = [
     //[
     //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
@@ -94,8 +95,9 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public lineChartType: string = 'line';
 
   public randomize(): void {
-    for  (let i = 0; i < this.lineChartDataArray.length; i++) {
-      let lineChartData = this.lineChartDataArray[i];
+    this.lineChartDataArray = []
+    for  (let i = 0; i < this.tags.length; i++) {
+      let lineChartData = this.lineChartData;
       let _lineChartData: Array<any> = new Array(lineChartData.length);
       for (let i = 0; i < lineChartData.length; i++) {
         _lineChartData[i] = { data: new Array(lineChartData[i].data.length), label: lineChartData[i].label };
@@ -103,7 +105,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
           _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
         }
       }
-      this.lineChartDataArray[i] = _lineChartData;
+      this.lineChartDataArray.push( _lineChartData);
     }
   }
 

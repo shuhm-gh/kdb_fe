@@ -51,6 +51,9 @@
   </div>
 </div>
 
+<!-- [editable]='true' -->
+<tag-input [(ngModel)]="tags" placeholder="已添加" [maxItems]=0></tag-input>
+
 <div class="row">
   <div *ngFor="let lineChartData of lineChartDataArray; let index=index; let odd=odd; let even=even;">
     <div *ngIf="even||odd">
@@ -62,5 +65,3 @@
     </div>
   </div>
 </div>
-
-<rl-tag-input [(ngModel)]="tags" placeholder="已添加"></rl-tag-input>
