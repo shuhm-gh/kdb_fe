@@ -26,41 +26,14 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
 
 
   // lineChart
-  public lineChartData: any = [{ data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' }];
-  public lineChartDataArray: Array<any> = [
-    //[
-    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    //],
-    //[
-    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
-    //],
-    //[
-    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series G' },
-    //],
-    //[
-    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    //],
-    //[
-    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
-    //],
-    //[
-    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series G' },
-    //],
-    //[
-    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    //],
-    //[
-    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series D' },
-    //],
-    //[
-    //  { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    //]
-  ];
+  public lineChartData: any = [{ data: [65, 59, 80, 81, 56, 55, 40, 12, 45, 70, 88, 10, 22, 81, 56, 55, 40, 12, 45, 70, 40, 12, 45, 70, 88, 10, 22, 43, 150, 22], label: 'Series A' }];
+  public lineChartDataArray: Array<any> = [];
 
   public shop_select: string;
   public book_select: string;
+  public datatype: string="售价";
 
-  public lineChartLabels: Array<any> = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public lineChartLabels: Array<any> = [];
   public lineChartOptions: any = {
     animation: false,
     responsive: true,
@@ -107,6 +80,12 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
       }
       this.lineChartDataArray.push( _lineChartData);
     }
+
+    this.lineChartLabels = [];
+    for (let i = 0; i < this.lineChartData[0].data.length; i++) {
+      this.lineChartLabels.push(i+1);
+    }
+    console.log(this.lineChartLabels);
   }
 
   // events
@@ -131,6 +110,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     this.items_added.push(this.shop_select['text'] + '###' + this.book_select['text']);
     this.tags.push(this.shop_select['text'] + '###' + this.book_select['text']);
     console.log(this.items_added);
+    console.log(this.datatype);
     //
     
   }
