@@ -2,6 +2,7 @@ import { Component, OnInit, ChangeDetectorRef, ApplicationRef, NgZone } from '@a
 import { NavComponent } from '../../dashboard/nav.component';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgClass } from '@angular/common';
+import { Http, Headers, Response } from '@angular/http';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 
@@ -17,10 +18,29 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     private router: Router,
     private cdRef:ChangeDetectorRef,
     private appRef:ApplicationRef,
-    private zone:NgZone
+    private zone:NgZone,
+    private http: Http
   ) { }
 
+  public get_data() {
+    return this.http.post('http://127.0.0.1:8888/api/query_mshopbook_data', JSON.stringify({}))
+            .map((response: Response) => {
+                // login successful if there's a jwt token in the response
+                let data = response.json();
+                console.log(data);
+                for (let i = 0; i<data.data.length; i++) {
+                  let _data = data.data[i].val;
+                  let _lable = data.data[i].date;
+                  this.lineChartDataArray.push(_data);
+                  this.lineChartLabelArray.push(_lable);
+                }
+
+            }).toPromise();
+  }
   ngOnInit() {
+    console.log('init');
+    this.get_data().then();
+    console.log('after get data');
     this.parent.setActiveByPath("charts", this.parent.m_shop_bookM_dataCharts);
   };
 
@@ -32,8 +52,9 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public shop_select: string;
   public book_select: string;
   public datatype: string="售价";
+  public template: string="模板一";
 
-  public lineChartLabels: Array<any> = [];
+  public lineChartLabelArray: Array<any> = [];
   public lineChartOptions: any = {
     animation: false,
     responsive: true,
@@ -81,11 +102,15 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
       this.lineChartDataArray.push( _lineChartData);
     }
 
-    this.lineChartLabels = [];
-    for (let i = 0; i < this.lineChartData[0].data.length; i++) {
-      this.lineChartLabels.push(i+1);
+    this.lineChartLabelArray = [];
+
+    for (let o = 0; o < this.lineChartDataArray.length; o++) {
+      let _label = [];
+      for (let i = 0; i < this.lineChartData[0].data.length; i++) {
+        _label.push(i+1);
+      }
+      this.lineChartLabelArray.push(_label);
     }
-    console.log(this.lineChartLabels);
   }
 
   // events
@@ -112,7 +137,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     console.log(this.items_added);
     console.log(this.datatype);
     //
-    
+
   }
 
   public refresh_selected() {
@@ -163,5 +188,10 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public refreshValue(value:any):void {
     this.value = value;
     console.log('refreshValue: ', this.value);
+  }
+
+  public load_template(value:any):void {
+    console.log(this.template);
+    console.log(value);
   }
 }

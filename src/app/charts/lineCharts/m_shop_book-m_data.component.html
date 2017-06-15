@@ -37,7 +37,7 @@
   </div>
 
   <div class="col-xs-1">
-    <select class="selectpicker" style="width: 80px; height: 30px;">
+    <select class="selectpicker" [(ngModel)]="template" (click)="load_template()" data-live-search="true" style="width: 80px; height: 30px;">
         <option>模板一</option>
         <option>模板二</option>
         <option>模板三</option>
@@ -58,7 +58,7 @@
   <div *ngFor="let lineChartData of lineChartDataArray; let index=index; let odd=odd; let even=even;">
     <div *ngIf="even||odd">
       <div class="form-group" class="col-md-4">
-        <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
+        <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabelArray[index]" [options]="lineChartOptions" [colors]="lineChartColours"
           [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
         </canvas>
       </div>
