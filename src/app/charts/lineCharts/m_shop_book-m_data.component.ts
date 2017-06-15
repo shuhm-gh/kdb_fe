@@ -23,7 +23,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   ) { }
 
   public get_data() {
-    return this.http.post('http://127.0.0.1:8888/api/query_mshopbook_data', JSON.stringify({}))
+    return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_data', JSON.stringify({}))
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let data = response.json();
