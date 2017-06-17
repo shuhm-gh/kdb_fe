@@ -23,8 +23,8 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   ) { }
 
   public get_data() {
-    //return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_data', JSON.stringify({}))
-    return this.http.post('http://localhost:8888/api/query_mshopbook_data', JSON.stringify({}))
+    return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_data', JSON.stringify({}))
+    //return this.http.post('http://localhost:8888/api/query_mshopbook_data', JSON.stringify({}))
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let data = response.json();
@@ -232,6 +232,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
       let _template = this.template_list[i];
       console.log(_template);
       if (value.text == _template.name) {
+        this.tags = [];
         this.datatype = _template.type;
         for (let j=0; j<_template.data.length; j++) {
           let _item = _template.data[j];
