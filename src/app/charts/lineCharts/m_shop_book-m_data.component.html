@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
-    <ng-select [allowClear]="true" [items]="items" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected_shop($event)"
+    <ng-select [allowClear]="true" [items]="shop_list" [disabled]="disabled" (data)="refreshValueShop($event)" (selected)="selected_shop($event)"
       (removed)="removed($event)" (typed)="typed($event)" placeholder="店铺">
     </ng-select>
   </div>
   <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
-    <ng-select [allowClear]="true" [items]="items_book" [disabled]="disabled" (data)="refreshValue($event)" (selected)="selected_book($event)"
+    <ng-select [allowClear]="true" [items]="book_list" [disabled]="disabled" (data)="refreshValueBook($event)" (selected)="selected_book($event)"
       (removed)="removed($event)" (typed)="typed($event)" placeholder="ISBN">
     </ng-select>
   </div>
@@ -17,14 +17,25 @@
                 <span class="sr-only">Add Price</span></button>
   </div>
 
-  <!--
+  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
+    <ng-select [allowClear]="true" [items]="datatype_list" [disabled]="disabled" (data)="refreshValueDatatype($event)" (selected)="selected_datatype($event)"
+      (removed)="removed($event)" (typed)="typed($event)" placeholder="类型">
+    </ng-select>
+  </div>
+
+  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
+    <ng-select [allowClear]="true" [items]="template_name_list" [disabled]="disabled" (data)="refreshValueTemplate($event)" (selected)="selected_template($event)"
+      (removed)="removed($event)" (typed)="typed($event)" placeholder="模板">
+    </ng-select>
+  </div>
+
+<!--
   <div class="col-xs-2">
-  <select [(ngModel)]="item" style="width: 250px; height: 30px;">
+  <select [(ngModel)]="datatype" data-live-search="true" style="width: 250px; height: 30px;">
 	    <option value="已添加" selected="已添加"></option>
-	    <option *ngFor="let n of items_added" [value]="n">{{n}}</option>
+	    <option *ngFor="let n of datatype_list" [value]="n">{{n}}</option>
     </select>
   </div>
-  -->
 
   <div class="col-xs-1">
     <select class="selectpicker" [(ngModel)]="datatype" data-live-search="true" style="width: 80px; height: 30px;">
@@ -43,6 +54,7 @@
         <option>模板三</option>
       </select>
   </div>
+-->
 
   <div class="col-xs-2">
     <button type="button" class="btn btn-danger custom-button-width .navbar-right">保存模板</button>

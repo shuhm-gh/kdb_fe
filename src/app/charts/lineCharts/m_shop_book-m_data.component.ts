@@ -23,18 +23,55 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   ) { }
 
   public get_data() {
-    return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_data', JSON.stringify({}))
+    //return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_data', JSON.stringify({}))
+    return this.http.post('http://localhost:8888/api/query_mshopbook_data', JSON.stringify({}))
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let data = response.json();
                 console.log(data);
-                for (let i = 0; i<data.data.length; i++) {
-                  let _data = data.data[i].val;
-                  let _lable = data.data[i].date;
+                //
+                this.datatype = data.m_shop_book_data.type;
+                //let _tags: Array<string>;
+
+                // 曲线图数据
+                for (let i = 0; i<data.m_shop_book_data.data.length; i++) {
+                  let _item = data.m_shop_book_data.data[i];
+                  let _data: Array<any> = [{data:[], label:''}];
+                  _data[0].data = _item.val;
+                  _data[0].label = this.datatype;
+
+                  let _lable = _item.date;
+                  this.tags.push(_item.shop + '#' + _item.book);
                   this.lineChartDataArray.push(_data);
                   this.lineChartLabelArray.push(_lable);
                 }
+                //this.tags = _tags;
 
+                //datatype
+                this.datatype_list = data.datatype_list
+
+                //template
+                let _template_name_list: Array<string>=[];
+                this.template_list = data.template_list;
+                for (let i = 0; i < data.template_list.length; i++) {
+                  _template_name_list.push(data.template_list[i].name)
+                }
+                this.template_name_list = _template_name_list;
+
+                //shop
+                this.shop_list = data.shop_list
+
+                //book
+                let _book_list: Array<string>= []
+                for (let i = 0; i < data.book_list.length; i++) {
+                  _book_list.push(data.book_list[i].name)
+                }
+                this.book_list = _book_list;
+
+                console.log(this.shop_list);
+                console.log(this.book_list);
+                console.log(this.datatype_list);
+                console.log(this.template_name_list);
             }).toPromise();
   }
   ngOnInit() {
@@ -48,6 +85,9 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   // lineChart
   public lineChartData: any = [{ data: [65, 59, 80, 81, 56, 55, 40, 12, 45, 70, 88, 10, 22, 81, 56, 55, 40, 12, 45, 70, 40, 12, 45, 70, 88, 10, 22, 43, 150, 22], label: 'Series A' }];
   public lineChartDataArray: Array<any> = [];
+  public datatype_list: Array<string> = [];
+  public template_name_list: Array<string> = [];
+  public template_list: Array<any>;
 
   public shop_select: string;
   public book_select: string;
@@ -124,8 +164,8 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
 
   
 
-  public items:Array<string> = ['人民邮电出版社官方旗舰店', '新华文轩', '当当网'];
-  public items_book:Array<string> = ['软件工程', '操作系统', '计算机网络'];
+  public shop_list:Array<string> = [];
+  public book_list:Array<string> = [];
   public tags: Array<string> = [];
   public items_added_show: Array<string> = [];
   public items_added: Array<string> = [];
@@ -165,16 +205,41 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   //  this._disabledV = value;
   //  this.disabled = this._disabledV === '1';
   //}
- 
+  //update book list
   public selected_shop(value:any):void {
     this.shop_select = value;
     //console.log('Selected value is: ', value);
     console.log('Selected value is: ', this.shop_select);
+    // update book list
   }
 
   public selected_book(value:any):void {
     this.book_select = value;
     console.log('Selected value is: ', value);
+  }
+
+  public selected_datatype(value:any):void {
+    this.datatype = value;
+    console.log('Selected value is: ', value);
+  }
+
+  public selected_template(value:any):void {
+    this.template = value;
+    console.log('Selected value is: ', value);
+    // update tags
+    console.log(this.template_list);
+    for (let i=0; i<this.template_list.length; i++) {
+      let _template = this.template_list[i];
+      console.log(_template);
+      if (value.text == _template.name) {
+        this.datatype = _template.type;
+        for (let j=0; j<_template.data.length; j++) {
+          let _item = _template.data[j];
+          console.log(_item);
+          this.tags.push(_item.shop + '#' + _item.book)
+        }
+      }
+    }
   }
  
   public removed(value:any):void {
@@ -185,7 +250,22 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     console.log('New search input: ', value);
   }
  
-  public refreshValue(value:any):void {
+  public refreshValueShop(value:any):void {
+    this.value = value;
+    console.log('refreshValue: ', this.value);
+  }
+
+  public refreshValueBook(value:any):void {
+    this.value = value;
+    console.log('refreshValue: ', this.value);
+  }
+
+  public refreshValueDatatype(value:any):void {
+    this.value = value;
+    console.log('refreshValue: ', this.value);
+  }
+
+  public refreshValueTemplate(value:any):void {
     this.value = value;
     console.log('refreshValue: ', this.value);
   }
