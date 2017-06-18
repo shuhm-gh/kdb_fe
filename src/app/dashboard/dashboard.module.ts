@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { PaginationModule } from 'ng2-bootstrap';
+import { ModalModule } from 'ng2-bootstrap/modal';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { FileUploadModule } from 'ng2-file-upload';
 
@@ -65,7 +66,7 @@ const tablesRoutes: Routes = [
         SelectModule,
         TagInputModule,
         //BrowserAnimationsModule,
-        BrowserModule, TooltipModule, DatepickerModule.forRoot(), ClickOutsideModule
+        BrowserModule, TooltipModule, ModalModule.forRoot(), DatepickerModule.forRoot(), ClickOutsideModule
 
     ],
     declarations: [

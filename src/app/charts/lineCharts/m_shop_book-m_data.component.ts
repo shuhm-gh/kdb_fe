@@ -94,6 +94,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public isbn: string = 'this is isbn';
   public datatype: string="售价";
   public template: string="模板一";
+  public templ_name: string;
 
   public lineChartLabelArray: Array<any> = [];
   public lineChartOptions: any = {
@@ -157,7 +158,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public save_template() {
     return this.http.post('http://kylin-ux.com:8888/api/save_template', JSON.stringify({
     //return this.http.post('http://localhost:8888/api/save_template', JSON.stringify({
-      'name': 'temp name',
+      'name': this.templ_name,
       'type': this.datatype,
       'data': [
         {
@@ -173,7 +174,15 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
         console.log(data);
 
         if (data.res == true) {
-          this.template_name_list.push('新');
+          console.log('add new template');
+          let _templ_name: Array<string> = this.template_name_list;
+          _templ_name.push(this.templ_name);
+          this.template_name_list = _templ_name;
+          console.log(this.template_name_list);
+          //this.template_name_list.push(this.templ_name);
+        }
+        else {
+          console.log('something wrong');
         }
 
       }

@@ -57,7 +57,10 @@
 -->
 
   <div class="col-xs-2">
+    <!--
     <button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="save_template()">保存模板</button>
+    -->
+    <button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="staticModal.show()">保存模板</button>
     <button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="query()">查询</button>
     <!--<span class="btn btn-primary" onclick="randomize()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Update</span>-->
   </div>
@@ -74,6 +77,29 @@
           [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
         </canvas>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" bsModal #staticModal="bs-modal" [config]="{backdrop: 'static'}"
+     tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h6 class="modal-title pull-left">保存模板</h6>
+        <button type="button" class="close pull-right" aria-label="Close" (click)="staticModal.hide()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <input type="text" placeholder="模板名称" title="请输入用户名" [(ngModel)]="templ_name" name="templ_name" id="templ_name"
+                                class="form-control mr-sm-2" required>
+      </div>
+
+      <div class="modal-body">
+        <button type="button" class="btn btn-primary" (click)="save_template(); staticModal.hide()">确认</button>
+      </div>
+
     </div>
   </div>
 </div>
