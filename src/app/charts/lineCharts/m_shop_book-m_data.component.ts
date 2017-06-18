@@ -23,8 +23,8 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   ) { }
 
   public get_data() {
-    return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_data', JSON.stringify({}))
-    //return this.http.post('http://localhost:8888/api/query_mshopbook_data', JSON.stringify({}))
+    return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_init_data', JSON.stringify({}))
+    //return this.http.post('http://localhost:8888/api/query_mshopbook_init_data', JSON.stringify({}))
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let data = response.json();
@@ -91,6 +91,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
 
   public shop_select: string;
   public book_select: string;
+  public isbn: string = 'this is isbn';
   public datatype: string="售价";
   public template: string="模板一";
 
@@ -127,6 +128,57 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   ];
   public lineChartLegend: boolean = true;
   public lineChartType: string = 'line';
+
+  public query() {
+    return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_data', JSON.stringify({}))
+    //return this.http.post('http://localhost:8888/api/query_mshopbook_data', JSON.stringify({'type':this.datatype, 'data':this.tags}))
+            .map((response: Response) => {
+                // login successful if there's a jwt token in the response
+                let data = response.json();
+                console.log(data);
+
+                // 曲线图数据
+                this.lineChartDataArray = [];
+                this.lineChartLabelArray = [];
+                for (let i = 0; i<data.data.length; i++) {
+                  let _item = data.data[i];
+                  let _data: Array<any> = [{data:[], label:''}];
+                  _data[0].data = _item.val;
+                  _data[0].label = this.datatype;
+
+                  let _lable = _item.date;
+                  this.lineChartDataArray.push(_data);
+                  this.lineChartLabelArray.push(_lable);
+                }
+              }
+          ).toPromise();
+  }
+
+  public save_template() {
+    return this.http.post('http://kylin-ux.com:8888/api/save_template', JSON.stringify({
+    //return this.http.post('http://localhost:8888/api/save_template', JSON.stringify({
+      'name': 'temp name',
+      'type': this.datatype,
+      'data': [
+        {
+          'shop': this.shop_select,
+          'book': this.book_select,
+          'isbn': this.isbn,
+        }
+        ]
+    }))
+      .map((response: Response) => {
+        // login successful if there's a jwt token in the response
+        let data = response.json();
+        console.log(data);
+
+        if (data.res == true) {
+          this.template_name_list.push('新');
+        }
+
+      }
+      ).toPromise();
+  }
 
   public randomize(): void {
     this.lineChartDataArray = []
