@@ -1,4 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef, ApplicationRef, NgZone } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { NavComponent } from '../../dashboard/nav.component';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgClass } from '@angular/common';
@@ -63,13 +64,17 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
 
                 //book
                 let _book_list: Array<string>= []
+                let _isbn_list: Array<string>= []
                 for (let i = 0; i < data.book_list.length; i++) {
-                  _book_list.push(data.book_list[i].name)
+                  _book_list.push(data.book_list[i].name);
+                  _isbn_list.push(data.book_list[i].isbn);
                 }
                 this.book_list = _book_list;
+                this.isbn_list = _isbn_list;
 
                 console.log(this.shop_list);
                 console.log(this.book_list);
+                console.log(this.isbn_list);
                 console.log(this.datatype_list);
                 console.log(this.template_name_list);
             }).toPromise();
@@ -156,6 +161,12 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   }
 
   public save_template() {
+    //for this.tags
+    //for this.book_list
+    let _data = [];
+    for (let i = 0; i < this.tags.length; i++) {
+
+    }
     return this.http.post('http://kylin-ux.com:8888/api/save_template', JSON.stringify({
     //return this.http.post('http://localhost:8888/api/save_template', JSON.stringify({
       'name': this.templ_name,
@@ -189,31 +200,6 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
       ).toPromise();
   }
 
-  public randomize(): void {
-    this.lineChartDataArray = []
-    for  (let i = 0; i < this.tags.length; i++) {
-      let lineChartData = this.lineChartData;
-      let _lineChartData: Array<any> = new Array(lineChartData.length);
-      for (let i = 0; i < lineChartData.length; i++) {
-        _lineChartData[i] = { data: new Array(lineChartData[i].data.length), label: lineChartData[i].label };
-        for (let j = 0; j < lineChartData[i].data.length; j++) {
-          _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
-        }
-      }
-      this.lineChartDataArray.push( _lineChartData);
-    }
-
-    this.lineChartLabelArray = [];
-
-    for (let o = 0; o < this.lineChartDataArray.length; o++) {
-      let _label = [];
-      for (let i = 0; i < this.lineChartData[0].data.length; i++) {
-        _label.push(i+1);
-      }
-      this.lineChartLabelArray.push(_label);
-    }
-  }
-
   // events
   public chartClicked(e: any): void {
     console.log(e);
@@ -227,18 +213,46 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
 
   public shop_list:Array<string> = [];
   public book_list:Array<string> = [];
+  public isbn_list:Array<string> = [];
   public tags: Array<string> = [];
   public items_added_show: Array<string> = [];
-  public items_added: Array<string> = [];
+  public items_added: Array<any> = [];
   public item:string;
 
   public add(): void {
-    this.items_added.push(this.shop_select['text'] + '###' + this.book_select['text']);
+    this.items_added.push({'shop':this.shop_select['text'], 'book':this.book_select['text'], 'isbn':''});
     this.tags.push(this.shop_select['text'] + '###' + this.book_select['text']);
     console.log(this.items_added);
     console.log(this.datatype);
     //
 
+  }
+
+  public clear(): void {
+    this.tags = [];
+    this.items_added = [];
+  }
+
+  public remove(tag: string): void {
+    console.log('on remove' + tag);
+    //delete tag
+    let index: number = this.tags.indexOf(tag);
+    if (index !== -1) {
+        this.tags.splice(index, 1);
+    }
+    console.log(this.tags);
+
+    let _index = tag.indexOf('###');
+    let _shop = tag.substring(0, _index);
+    let _book = tag.substring(_index + 3, );
+
+    //delete item_added
+    for (let i = 0; i < this.items_added.length; i++) {
+      let _item = this.items_added[i];
+      //if (_item['shop'] == _shop && _item['isbn'] == _isbn) {
+
+      }
+    //}
   }
 
   public refresh_selected() {
@@ -335,5 +349,30 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public load_template(value:any):void {
     console.log(this.template);
     console.log(value);
+  }
+
+  public randomize(): void {
+    this.lineChartDataArray = []
+    for  (let i = 0; i < this.tags.length; i++) {
+      let lineChartData = this.lineChartData;
+      let _lineChartData: Array<any> = new Array(lineChartData.length);
+      for (let i = 0; i < lineChartData.length; i++) {
+        _lineChartData[i] = { data: new Array(lineChartData[i].data.length), label: lineChartData[i].label };
+        for (let j = 0; j < lineChartData[i].data.length; j++) {
+          _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
+        }
+      }
+      this.lineChartDataArray.push( _lineChartData);
+    }
+
+    this.lineChartLabelArray = [];
+
+    for (let o = 0; o < this.lineChartDataArray.length; o++) {
+      let _label = [];
+      for (let i = 0; i < this.lineChartData[0].data.length; i++) {
+        _label.push(i+1);
+      }
+      this.lineChartLabelArray.push(_label);
+    }
   }
 }

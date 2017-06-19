@@ -66,8 +66,18 @@
   </div>
 </div>
 
-<!-- [editable]='true' -->
-<tag-input [(ngModel)]="tags" placeholder="已添加" [maxItems]=0></tag-input>
+<div class="row">
+  <div class="col-xs-1">
+    <button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="clear()">
+        <!--a href="/main/m_shop_bookM_dataCharts" class="btn btn-default"-->
+                <span class="glyphicon glyphicon-remove"></span>
+                <span class="sr-only">Add Price</span></button>
+  </div>
+  <div>
+    <!-- [editable]='true' -->
+    <tag-input [(ngModel)]="tags" (onRemove)="remove($event)" placeholder="已添加" [maxItems]=0></tag-input>
+  </div>
+</div>
 
 <div class="row">
   <div *ngFor="let lineChartData of lineChartDataArray; let index=index; let odd=odd; let even=even;">
