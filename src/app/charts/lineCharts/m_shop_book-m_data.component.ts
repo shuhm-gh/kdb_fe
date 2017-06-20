@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, ApplicationRef, NgZone } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewEncapsulation, ChangeDetectorRef, ApplicationRef, NgZone } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { NavComponent } from '../../dashboard/nav.component';
 import { Router, ActivatedRoute, Params } from '@angular/router';
@@ -6,10 +6,12 @@ import { NgClass } from '@angular/common';
 import { Http, Headers, Response } from '@angular/http';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { SelectComponent } from 'ng2-select';
 
 @Component({
   selector: 'app-charts',
   templateUrl: './m_shop_book-m_data.component.html',
+  encapsulation: ViewEncapsulation.None  // Enable dynamic HTML styles
 })
 export class M_shop_bookM_dataChartsComponent implements OnInit {
 
@@ -22,6 +24,9 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     private zone:NgZone,
     private http: Http
   ) { }
+
+  @ViewChild('select')
+  public select: SelectComponent;
 
   public get_data() {
     return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_init_data', JSON.stringify({}))
@@ -63,26 +68,28 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
                 this.shop_list = data.shop_list
 
                 //book
-                let _book_list: Array<string>= []
-                let _isbn_list: Array<string>= []
+                let _book_list: Array<any> = []
                 for (let i = 0; i < data.book_list.length; i++) {
-                  _book_list.push(data.book_list[i].name);
-                  _isbn_list.push(data.book_list[i].isbn);
+                  let _book = data.book_list[i];
+                  _book_list.push({id:1+i, text:_book.name});
                 }
                 this.book_list = _book_list;
-                this.isbn_list = _isbn_list;
 
-                console.log(this.shop_list);
+                //console.log(this.shop_list);
                 console.log(this.book_list);
-                console.log(this.isbn_list);
-                console.log(this.datatype_list);
-                console.log(this.template_name_list);
+                //console.log(this.datatype_list);
+                //console.log(this.template_name_list);
             }).toPromise();
   }
+
   ngOnInit() {
     console.log('init');
     this.get_data().then();
     console.log('after get data');
+    console.log(this.book_list);
+    
+
+
     this.parent.setActiveByPath("charts", this.parent.m_shop_bookM_dataCharts);
   };
 
@@ -190,6 +197,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
           _templ_name.push(this.templ_name);
           this.template_name_list = _templ_name;
           console.log(this.template_name_list);
+          this.select.items = this.template_name_list;
           //this.template_name_list.push(this.templ_name);
         }
         else {
@@ -212,8 +220,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   
 
   public shop_list:Array<string> = [];
-  public book_list:Array<string> = [];
-  public isbn_list:Array<string> = [];
+  public book_list:Array<any> = [];
   public tags: Array<string> = [];
   public items_added_show: Array<string> = [];
   public items_added: Array<any> = [];

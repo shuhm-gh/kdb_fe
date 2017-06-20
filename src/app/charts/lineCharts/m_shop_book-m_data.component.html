@@ -6,7 +6,7 @@
   </div>
   <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
     <ng-select [allowClear]="true" [items]="book_list" [disabled]="disabled" (data)="refreshValueBook($event)" (selected)="selected_book($event)"
-      (removed)="removed($event)" (typed)="typed($event)" placeholder="ISBN">
+      (removed)="removed($event)" (typed)="typed($event)" placeholder="书目">
     </ng-select>
   </div>
 
@@ -23,8 +23,8 @@
     </ng-select>
   </div>
 
-  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
-    <ng-select [allowClear]="true" [items]="template_name_list" [disabled]="disabled" (data)="refreshValueTemplate($event)" (selected)="selected_template($event)"
+  <div class="col-xs-4" *ngIf="template_name_list.length > 0" style="width: 300px; margin-bottom: 20px;">
+    <ng-select #select [allowClear]="true" [items]="template_name_list" [disabled]="disabled" (data)="refreshValueTemplate($event)" (selected)="selected_template($event)"
       (removed)="removed($event)" (typed)="typed($event)" placeholder="模板">
     </ng-select>
   </div>
