@@ -108,6 +108,13 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public template: string="模板一";
   public templ_name: string;
 
+  public shop_list:Array<string> = [];
+  public book_list:Array<any> = [];
+  public tags: Array<string> = [];
+  public items_added_show: Array<string> = [];
+  public items_added: Array<any> = [];
+  public item:string;
+
   public lineChartLabelArray: Array<any> = [];
   public lineChartOptions: any = {
     animation: false,
@@ -192,13 +199,15 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
         console.log(data);
 
         if (data.res == true) {
-          console.log('add new template');
-          let _templ_name: Array<string> = this.template_name_list;
-          _templ_name.push(this.templ_name);
-          this.template_name_list = _templ_name;
-          console.log(this.template_name_list);
-          this.select.items = this.template_name_list;
+          this.template_name_list.push(this.templ_name);
+          console.log('add new template', this.template_name_list);
+          this.select.items = this.template_name_list; //must
           //this.template_name_list.push(this.templ_name);
+
+          //this.template_list
+          let _shop_book = [];
+          //shop_list
+          let _template = {name:this.templ_name, shop_book:[{}]}
         }
         else {
           console.log('something wrong');
@@ -216,15 +225,6 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public chartHovered(e: any): void {
     console.log(e);
   }
-
-  
-
-  public shop_list:Array<string> = [];
-  public book_list:Array<any> = [];
-  public tags: Array<string> = [];
-  public items_added_show: Array<string> = [];
-  public items_added: Array<any> = [];
-  public item:string;
 
   public add(): void {
     this.items_added.push({'shop':this.shop_select['text'], 'book':this.book_select['text'], 'isbn':''});
