@@ -75,7 +75,7 @@
   </div>
   <div>
     <!-- [editable]='true' -->
-    <tag-input [(ngModel)]="tags" (onRemove)="remove($event)" placeholder="已添加" [maxItems]=0></tag-input>
+    <tag-input [(ngModel)]="tags" (onRemove)="remove($event)" [transform]="transformer" placeholder="已添加" [maxItems]=0></tag-input>
   </div>
 </div>
 

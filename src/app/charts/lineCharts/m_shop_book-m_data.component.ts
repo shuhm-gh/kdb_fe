@@ -47,7 +47,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
                   _data[0].label = this.datatype;
 
                   let _lable = _item.date;
-                  this.tags.push(_item.shop + '#' + _item.book);
+                  this.tag_list.push(_item);
                   this.lineChartDataArray.push(_data);
                   this.lineChartLabelArray.push(_lable);
                 }
@@ -105,12 +105,12 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public book_select: string;
   public isbn: string = 'this is isbn';
   public datatype: string="售价";
-  public template: string="模板一";
-  public templ_name: string;
+  public template: any;
+  //public templ_name: string;
 
   public shop_list:Array<string> = [];
   public book_list:Array<any> = [];
-  public tags: Array<string> = [];
+  public tag_list: Array<any> = [];
   public items_added_show: Array<string> = [];
   public items_added: Array<any> = [];
   public item:string;
@@ -199,15 +199,15 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
         console.log(data);
 
         if (data.res == true) {
-          this.template_name_list.push(this.templ_name);
-          console.log('add new template', this.template_name_list);
-          this.select.items = this.template_name_list; //must
+          this.template_list.push(this.template);
+          //console.log('add new template', this.template_name_list);
+          this.select.items = this.template_list; //must
           //this.template_name_list.push(this.templ_name);
 
           //this.template_list
-          let _shop_book = [];
+          //let _shop_book = [];
           //shop_list
-          let _template = {name:this.templ_name, shop_book:[{}]}
+          //let _template = {name:this.templ_name, shop_book:[{}]}
         }
         else {
           console.log('something wrong');
@@ -226,28 +226,35 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     console.log(e);
   }
 
+  // *** tag ***
+  // [{{shop:{id:xxx, text:xxx}, book:{id:xxx, text:xxx}}, {},]
+  public transformer(item:any): string {
+    return item.shop.text + '#' + item.book.text;
+  }
+
   public add(): void {
-    this.items_added.push({'shop':this.shop_select['text'], 'book':this.book_select['text'], 'isbn':''});
-    this.tags.push(this.shop_select['text'] + '###' + this.book_select['text']);
-    console.log(this.items_added);
+    this.tag_list.push({'shop':this.shop_select, 'book':this.book_select});
+    //this.items_added.push({'shop':this.shop_select['text'], 'book':this.book_select['text'], 'isbn':''});
+    //this.tags.push(this.shop_select['text'] + '###' + this.book_select['text']);
+    //console.log(this.items_added);
     console.log(this.datatype);
     //
 
   }
 
   public clear(): void {
-    this.tags = [];
-    this.items_added = [];
+    this.tag_list = [];
+    //this.items_added = [];
   }
 
-  public remove(tag: string): void {
+  public remove(tag: any): void {
     console.log('on remove' + tag);
     //delete tag
-    let index: number = this.tags.indexOf(tag);
+    let index: number = this.tag_list.indexOf(tag);
     if (index !== -1) {
-        this.tags.splice(index, 1);
+        this.tag_list.splice(index, 1);
     }
-    console.log(this.tags);
+    console.log(this.tag_list);
 
     let _index = tag.indexOf('###');
     let _shop = tag.substring(0, _index);
@@ -261,6 +268,8 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
       }
     //}
   }
+
+  
 
   public refresh_selected() {
     this.items_added_show = this.items_added;
@@ -305,6 +314,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     console.log('Selected value is: ', value);
   }
 
+  // template {'id':xxx, 'text':xxx}
   public selected_template(value:any):void {
     this.template = value;
     console.log('Selected value is: ', value);
@@ -314,12 +324,12 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
       let _template = this.template_list[i];
       console.log(_template);
       if (value.text == _template.name) {
-        this.tags = [];
+        this.tag_list = [];
         this.datatype = _template.type;
         for (let j=0; j<_template.data.length; j++) {
           let _item = _template.data[j];
           console.log(_item);
-          this.tags.push(_item.shop + '#' + _item.book)
+          this.tag_list.push({'shop':_item.shop, 'book':_item.book});
         }
       }
     }
@@ -358,28 +368,29 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     console.log(value);
   }
 
-  public randomize(): void {
-    this.lineChartDataArray = []
-    for  (let i = 0; i < this.tags.length; i++) {
-      let lineChartData = this.lineChartData;
-      let _lineChartData: Array<any> = new Array(lineChartData.length);
-      for (let i = 0; i < lineChartData.length; i++) {
-        _lineChartData[i] = { data: new Array(lineChartData[i].data.length), label: lineChartData[i].label };
-        for (let j = 0; j < lineChartData[i].data.length; j++) {
-          _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
-        }
-      }
-      this.lineChartDataArray.push( _lineChartData);
-    }
-
-    this.lineChartLabelArray = [];
-
-    for (let o = 0; o < this.lineChartDataArray.length; o++) {
-      let _label = [];
-      for (let i = 0; i < this.lineChartData[0].data.length; i++) {
-        _label.push(i+1);
-      }
-      this.lineChartLabelArray.push(_label);
-    }
-  }
+  //this.tags: Array<string>;
+  //public randomize(): void {
+  //  this.lineChartDataArray = []
+  //  for  (let i = 0; i < this.tags.length; i++) {
+  //    let lineChartData = this.lineChartData;
+  //    let _lineChartData: Array<any> = new Array(lineChartData.length);
+  //    for (let i = 0; i < lineChartData.length; i++) {
+  //      _lineChartData[i] = { data: new Array(lineChartData[i].data.length), label: lineChartData[i].label };
+  //      for (let j = 0; j < lineChartData[i].data.length; j++) {
+  //        _lineChartData[i].data[j] = Math.floor((Math.random() * 100) + 1);
+  //      }
+  //    }
+  //    this.lineChartDataArray.push( _lineChartData);
+  //  }
+//
+  //  this.lineChartLabelArray = [];
+//
+  //  for (let o = 0; o < this.lineChartDataArray.length; o++) {
+  //    let _label = [];
+  //    for (let i = 0; i < this.lineChartData[0].data.length; i++) {
+  //      _label.push(i+1);
+  //    }
+  //    this.lineChartLabelArray.push(_label);
+  //  }
+  //}
 }
