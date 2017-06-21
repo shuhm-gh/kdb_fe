@@ -32,8 +32,8 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   //public select_book: SelectComponent;
 
   public get_data() {
-    //return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_init_data', JSON.stringify({}))
-    return this.http.post('http://localhost:8888/api/query_mshopbook_init_data', JSON.stringify({}))
+    return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_init_data', JSON.stringify({}))
+    //return this.http.post('http://localhost:8888/api/query_mshopbook_init_data', JSON.stringify({}))
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let res = response.json();
@@ -92,18 +92,18 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   }
 
   public query() {
-    //return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_data', JSON.stringify({}))
-    return this.http.post('http://localhost:8888/api/query_mshopbook_data', JSON.stringify({'type':this.datatype, 'data':this.tag_list}))
+    return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_data', JSON.stringify({'type':this.datatype, 'data':this.tag_list}))
+    //return this.http.post('http://localhost:8888/api/query_mshopbook_data', JSON.stringify({'type':this.datatype, 'data':this.tag_list}))
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
-                let data = response.json();
-                console.log(data);
+                let res = response.json();
+                console.log(res);
 
                 // 曲线图数据
                 this.lineChartDataArray = [];
                 this.lineChartLabelArray = [];
-                for (let i = 0; i<data.data.length; i++) {
-                  let _item = data.data[i];
+                for (let i = 0; i<res.data.length; i++) {
+                  let _item = res.data[i];
                   let _data: Array<any> = [{data:[], label:''}];
                   _data[0].data = _item.value;
                   _data[0].label = this.datatype;
@@ -130,8 +130,8 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
       //'type': this.datatype,
       'data': this.tag_list
     }
-    //return this.http.post('http://kylin-ux.com:8888/api/save_template', JSON.stringify({
-    return this.http.post('http://localhost:8888/api/save_template', JSON.stringify(this.template))
+    return this.http.post('http://kylin-ux.com:8888/api/save_template', JSON.stringify(this.template))
+    //return this.http.post('http://localhost:8888/api/save_template', JSON.stringify(this.template))
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         let res = response.json();
