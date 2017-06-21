@@ -1,11 +1,11 @@
 <div class="row">
   <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
-    <ng-select [allowClear]="true" [items]="shop_list" [disabled]="disabled" (data)="refreshValueShop($event)" (selected)="selected_shop($event)"
+    <ng-select [allowClear]="true" [items]="shop_book_list" [disabled]="disabled" (data)="refreshValueShop($event)" (selected)="selected_shop($event)"
       (removed)="removed($event)" (typed)="typed($event)" placeholder="店铺">
     </ng-select>
   </div>
   <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
-    <ng-select [allowClear]="true" [items]="book_list" [disabled]="disabled" (data)="refreshValueBook($event)" (selected)="selected_book($event)"
+    <ng-select  [allowClear]="true" [items]="book_list" [disabled]="disabled" (data)="refreshValueBook($event)" (selected)="selected_book($event)"
       (removed)="removed($event)" (typed)="typed($event)" placeholder="书目">
     </ng-select>
   </div>
@@ -23,8 +23,8 @@
     </ng-select>
   </div>
 
-  <div class="col-xs-4" *ngIf="template_name_list.length > 0" style="width: 300px; margin-bottom: 20px;">
-    <ng-select #select [allowClear]="true" [items]="template_name_list" [disabled]="disabled" (data)="refreshValueTemplate($event)" (selected)="selected_template($event)"
+  <div class="col-xs-4"  style="width: 300px; margin-bottom: 20px;">
+    <ng-select #select [allowClear]="true" [items]="template_list" [disabled]="disabled" (data)="refreshValueTemplate($event)" (selected)="selected_template($event)"
       (removed)="removed($event)" (typed)="typed($event)" placeholder="模板">
     </ng-select>
   </div>
@@ -75,7 +75,7 @@
   </div>
   <div>
     <!-- [editable]='true' -->
-    <tag-input [(ngModel)]="tags" (onRemove)="remove($event)" [transform]="transformer" placeholder="已添加" [maxItems]=0></tag-input>
+    <tag-input [(ngModel)]="tag_list_v" (onRemove)="remove($event)" [transform]="transformer" placeholder="已添加" [maxItems]=0></tag-input>
   </div>
 </div>
 
@@ -102,7 +102,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <input type="text" placeholder="模板名称" title="请输入用户名" [(ngModel)]="templ_name" name="templ_name" id="templ_name"
+        <input type="text" placeholder="模板名称" title="请输入用户名" [(ngModel)]="template_name" name="template_name" id="templ_name"
                                 class="form-control mr-sm-2" required>
       </div>
 
