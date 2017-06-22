@@ -257,12 +257,20 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public add(): void {
     // todo 判断重复
     if (!this.shop_select || !this.book_select) {
+      console.log('shop or book is empty');
       return;
     }
+
+    let _tag_name = this.shop_select['text'] + '#' + this.book_select['text'];
+    if (this.tag_list_v.indexOf(_tag_name) >= 0) {
+      console.log('added ', _tag_name);
+      return;
+    }
+
     this.tag_list.push({'shop':this.shop_select, 'book':this.book_select});
     console.log(this.tag_list);
     //this.items_added.push({'shop':this.shop_select['text'], 'book':this.book_select['text'], 'isbn':''});
-    this.tag_list_v.push(this.shop_select['text'] + '#' + this.book_select['text']);
+    this.tag_list_v.push(_tag_name);
     this.tag_list_v_bk = this.tag_list_v;
     //console.log(this.items_added);
     //console.log(this.datatype);
