@@ -105,6 +105,8 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
                 for (let i = 0; i<res.data.length; i++) {
                   let _item = res.data[i];
                   let _data: Array<any> = [{data:[], label:''}];
+
+                  console.log('query: ', _item, this.datatype);
                   _data[0].data = _item.value;
                   _data[0].label = this.datatype;
 
@@ -120,12 +122,16 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     //for this.tags
     //for this.book_list
     let _data = [];
-    for (let i = 0; i < this.tag_list.length; i++) {
-
+    for (let i = 0; i < this.template_list.length; i++) {
+      let _template = this.template_list[i];
+      if (_template.text == this.template_name) {
+        console.log('name existed ', this.template_name);
+        return;
+      }
     }
 
     this.template = {
-      'id': '',
+      'id': this.template_name,
       'text': this.template_name,
       //'type': this.datatype,
       'data': this.tag_list
@@ -178,8 +184,8 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public template_list: Array<any>;
   
 
-  public shop_select: string;
-  public book_select: string;
+  public shop_select: any;
+  public book_select: any;
   public isbn: string = 'this is isbn';
 
   public datatype: string="售价";
@@ -250,7 +256,9 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
 
   public add(): void {
     // todo 判断重复
-
+    if (!this.shop_select || !this.book_select) {
+      return;
+    }
     this.tag_list.push({'shop':this.shop_select, 'book':this.book_select});
     console.log(this.tag_list);
     //this.items_added.push({'shop':this.shop_select['text'], 'book':this.book_select['text'], 'isbn':''});
@@ -335,7 +343,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   }
 
   public selected_datatype(value:any):void {
-    this.datatype = value;
+    this.datatype = value.text;
     console.log('Selected value is: ', value);
   }
 
@@ -344,18 +352,21 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     this.template = value;
     console.log('Selected value is: ', value);
     // update tags
-    console.log(this.template_list);
+    console.log('this.template_list: ', this.template_list);
     for (let i=0; i<this.template_list.length; i++) {
       let _template = this.template_list[i];
       console.log(_template);
-      if (value.text == _template.name) {
+      if (value.text == _template.text) {
         this.tag_list = [];
-        this.datatype = _template.type;
+        this.tag_list_v = [];
+        //this.datatype = _template.type;
         for (let j=0; j<_template.data.length; j++) {
           let _item = _template.data[j];
-          console.log(_item);
+          console.log('_item:', _item);
           this.tag_list.push({'shop':_item.shop, 'book':_item.book});
+          this.tag_list_v.push(_item['shop']['text'] + '#' + _item['book']['text']);
         }
+        this.tag_list_v_bk = this.tag_list_v;
       }
     }
   }
