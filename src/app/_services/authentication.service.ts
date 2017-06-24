@@ -8,8 +8,8 @@ export class AuthenticationService {
     constructor(private http: Http) { }
 
     login(username: string, password: string) {
-        return this.http.post('http://kylin-ux.com:8888/api/authenticate', JSON.stringify({ username: username, password: password }))
-        //return this.http.post('http://localhost:8888/api/authenticate', JSON.stringify({ username: username, password: password }))
+        //return this.http.post('http://kylin-ux.com:8888/api/authenticate', JSON.stringify({ username: username, password: password }))
+        return this.http.post('http://localhost:8888/api/authenticate', JSON.stringify({ username: username, password: password }), { withCredentials: true })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let user = response.json();

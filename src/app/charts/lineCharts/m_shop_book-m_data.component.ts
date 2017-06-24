@@ -32,8 +32,8 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   //public select_book: SelectComponent;
 
   public get_data() {
-    return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_init_data', JSON.stringify({}))
-    //return this.http.post('http://localhost:8888/api/query_mshopbook_init_data', JSON.stringify({}))
+    //return this.http.post('http://kylin-ux.com:8888/api/query_mshopbook_init_data', JSON.stringify({}))
+    return this.http.post('http://localhost:8888/api/query_mshopbook_init_data', JSON.stringify({}), { withCredentials: true })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let res = response.json();
