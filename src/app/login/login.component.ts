@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
       data => {
         //this.router.navigate([this.returnUrl]);
+        console.log('login successfull');
         this.router.navigate(['main/bookM_shopM_dataTable']);
       },
       error => {

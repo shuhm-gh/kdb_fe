@@ -31,6 +31,8 @@ import { MonitorComponent } from '../charts/lineCharts/monitor.component';
 //import { BootstrapComponent } from '../bootstraps/static/bootstrap.component';
 //import { PluginComponent } from '../bootstraps/plugin/plugin.component';
 
+import { AUTH_PROVIDERS } from 'angular2-jwt';
+import { AuthGuard } from '../_services/auth.guard';
 
 const tablesRoutes: Routes = [
     {
@@ -41,10 +43,10 @@ const tablesRoutes: Routes = [
         children: [
             //{ path: '', component: DashboardComponent },
             //{ path: 'dashboard', component: DashboardComponent },
-            { path: 'bookM_shopM_dataTable', component: BookM_shopM_dataTableComponent },
-            { path: 'shop_bookM_dataCharts', component: Shop_bookM_dataChartsComponent },
-            { path: 'm_shop_bookM_dataCharts', component: M_shop_bookM_dataChartsComponent },
-            { path: 'monitor', component: MonitorComponent },
+            { path: 'bookM_shopM_dataTable', component: BookM_shopM_dataTableComponent, canActivate: [AuthGuard] },
+            { path: 'shop_bookM_dataCharts', component: Shop_bookM_dataChartsComponent, canActivate: [AuthGuard] },
+            { path: 'm_shop_bookM_dataCharts', component: M_shop_bookM_dataChartsComponent, canActivate: [AuthGuard] },
+            { path: 'monitor', component: MonitorComponent, canActivate: [AuthGuard] },
             //{ path: 'pieCharts', component: pieChartsComponent },
             //{ path: 'datatable', component: DatatableComponent },
             //{ path: 'bootstrap-static', component: BootstrapComponent },
@@ -82,6 +84,9 @@ const tablesRoutes: Routes = [
         //BootstrapComponent,
         //PluginComponent
     ],
-    providers: []
+
+    providers: [
+        AuthGuard, ...AUTH_PROVIDERS
+    ]
 })
 export class DashboardModule { }

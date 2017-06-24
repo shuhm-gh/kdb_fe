@@ -18,13 +18,13 @@ export class AuthenticationService {
                     throw Observable.throw('username or password wrong');
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                 }
-                localStorage.setItem('currentUser', JSON.stringify(user));
+                localStorage.setItem('id_token', user.id_token);
                 //return response;
             });
     }
 
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
+        localStorage.removeItem('id_token');
     }
 }
