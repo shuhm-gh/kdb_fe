@@ -31,8 +31,8 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private alertService: AlertService,
     private authenticationService: AuthenticationService) { }
-  onSubmit(f: NgForm) {
 
+  onSubmit(f: NgForm) {
     this.authenticationService.login(this.model._username, this.model._password)
       .subscribe(
       data => {

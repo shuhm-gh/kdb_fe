@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
+import {AlertService, AuthenticationService } from '../_services/index';
 
 @Component({
   selector: 'app-charts',
@@ -10,7 +11,8 @@ export class NavComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private authenticationService: AuthenticationService
   ) { }
 
   para = '';
@@ -170,6 +172,9 @@ export class NavComponent implements OnInit {
     if (r != null) return r[2]; return null;
   }
 
-
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+  }
 
 }

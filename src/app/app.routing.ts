@@ -1,12 +1,16 @@
 import { Routes, RouterModule } from '@angular/router';
 //import {AnalysisComponent} from './module/view.analysis';
-//import { lineChartsComponent } from './charts/lineCharts/lineCharts.component';
+import { Shop_bookM_dataChartsComponent } from './charts/lineCharts/shop_book-m_data.component';
 import { NavComponent } from './dashboard/nav.component';
 import { LoginComponent } from './login/login.component';
 
 const appRoutes: Routes = [
   {
     path: '',
+    component: NavComponent
+  },
+  {
+    path: 'login',
     component: LoginComponent
   },
   {
@@ -20,7 +24,7 @@ const appRoutes: Routes = [
   },
   {
     path: '**',
-    component: LoginComponent
+    component: NavComponent
   }
 ];
 
