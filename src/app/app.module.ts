@@ -25,6 +25,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { AlertService, AuthenticationService } from './_services/index';
 
 
+// https://github.com/auth0/angular2-jwt/issues/258
+// ERROR in Error encountered resolving symbol values statically. Only initialized variables and constants can be referenced because the value of this variable is needed by the template compiler (position 67:22 in the original .ts file), resolving symbol AUTH_PROVIDERS in /home/kylin/workspace/kdb_fe/node_modules/angular2-jwt/angular2-jwt.d.ts, resolving symbol AppModule in /home/kylin/workspace/kdb_fe/src/app/app.module.ts, resolving symbol AppModule in /home/kylin/workspace/kdb_fe/src/app/app.module.ts
 export function authHttpServiceFactory(http: Http, options: RequestOptions) {
   return new AuthHttp(new AuthConfig({}), http, options);
 }
