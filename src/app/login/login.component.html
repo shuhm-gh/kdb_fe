@@ -9,37 +9,81 @@
             </div>
             <div class="hpanel">
                 <div class="panel-body">
-                    <form action="#" id="loginForm" (ngSubmit)="onSubmit(userLoginForm)"  #userLoginForm="ngForm">
-                        <div class="form-group"><label class="control-label" for="username">用户名</label>
+                    <form action="#" id="loginForm" (ngSubmit)="login(userLoginForm)"  #userLoginForm="ngForm">
+                        <div class="form-group">
+                            <label class="control-label" for="username">用户名</label>
                             <!--input type="text" placeholder="example@gmail.com" title="请输入用户名" required value="" name="username" id="username" class="form-control"-->
                             <input type="text" placeholder="example@gmail.com" title="请输入用户名" [(ngModel)]="model._username" name="_username" id="username"
-                                class="form-control mr-sm-2" required>
+                                class="form-control mr-sm-2" (focus)="focus()" required>
                             <!--<span
                                 class="help-block small">你唯一的看店宝账户</span>-->
                         </div>
-                        <div class="form-group"><label class="control-label" for="password">密码</label>
+                        <div class="form-group">
+                            <label class="control-label" for="password">密码</label>
                             <!--input type="password" title="请输入密码" placeholder="******" required value="" name="password" id="password" class="form-control"-->
-                            <input type="password" title="请输入密码" placeholder="******" [(ngModel)]="model._password" name="_password" id="password" class="form-control mr-sm-2">
+                            <input type="password" title="请输入密码" placeholder="******" [(ngModel)]="model._password" name="_password" id="password"
+                            class="form-control mr-sm-2" (focus)="focus()" required>
                             <!--<span
                                 class="help-block small">不少于6位</span>-->
                         </div>
+                        <!--<p class="text-right">&nbsp; {{ err_tip }}</p>-->
+                        <!--<span style="padding-left:20px" style="float:right">{{ err_tip }}</span>-->
+                        <!--<pre class="text-right">&nbsp; {{ err_tip }}</pre>-->
                         <div class="checkbox">
-                            <input class="form-check-input" type="checkbox"  ng-model="remember" ng-init="remember = true" [(ngModel)]="model._remember" name="_remember" id="remember">下次自动登录
-                            <p class="help-block small">(公用电脑请勿勾选)</p>
+                            <input class="form-check-input" type="checkbox" ng-model="remember" ng-init="remember = true" [(ngModel)]="model._remember"
+                                name="_remember" id="remember">下次自动登录
+                            <p class="help-block small"><span>(公用电脑请勿勾选)</span><span class="text-danger" style="float:right">{{ err_tip }}</span></p>
                         </div>
 
                         <div class="input-group mt-2">
                         </div>
 
                         <button class="btn btn-success btn-block" type="submit">登录</button>
+                        
                         <!--<a class="btn btn-default btn-block" href="#">注册</a>-->
                     </form>
                 </div>
             </div>
         </div>
     </div>
+    
     <div class="row">
         <div class="col-md-12 text-center"><strong> 看店宝 </strong><br> 2017 Copyright 人民邮电出版社
         </div>
     </div>
+</div>
+
+<!--
+<alert type="success">
+  <strong>Well done!</strong> You successfully read this important alert message.
+</alert>
+<alert type="info">
+  <strong>Heads up!</strong> This alert needs your attention, but it's not super important.
+</alert>
+<alert type="warning">
+  <strong>Warning!</strong> Better check yourself, you're not looking too good.
+</alert>
+<alert type="danger">
+  <strong>Oh snap!</strong> Change a few things up and try submitting again.
+</alert>
+-->
+
+
+<style>
+    .alert-md-color {
+        background-color: #7B1FA2;
+        border-color: #4A148C;
+        color: #fff;
+    }
+
+    .force-to-bottom {
+        position: absolute;
+        bottom: 5%;
+        width: 100%;
+    }
+</style>
+
+<div class="force-to-bottom text-center" *ngFor="let alert of alerts">
+    <!--<alert [type]="alert.type"><span [innerHtml]="alert.msg" ></span></alert>-->
+    <alert type="md-color" [type]="alert.type" [dismissOnTimeout]="alert.timeout">{{ alert.msg }}</alert>
 </div>
