@@ -6,6 +6,7 @@ import { HttpModule, XSRFStrategy, Http } from '@angular/http';
 import { IlmsCookieStrategy } from '../main';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
+import { AlertModule } from 'ng2-bootstrap/alert';
 
 import { routing } from './app.routing';
 
@@ -30,7 +31,8 @@ import { AlertService, AuthenticationService } from './_services/index';
     HttpModule,
     routing,
     ChartsModule,
-    DashboardModule
+    DashboardModule,
+    AlertModule.forRoot()
   ],
   //providers: [{ provide: XSRFStrategy, useValue: IlmsCookieStrategy} ],
   providers: [

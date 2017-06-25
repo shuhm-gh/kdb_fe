@@ -4,10 +4,13 @@ import { Shop_bookM_dataChartsComponent } from './charts/lineCharts/shop_book-m_
 import { NavComponent } from './dashboard/nav.component';
 import { LoginComponent } from './login/login.component';
 
+import { AuthGuard } from './_services/auth.guard';
+
 const appRoutes: Routes = [
   {
     path: '',
-    component: NavComponent
+    component: NavComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: 'login',
@@ -16,6 +19,7 @@ const appRoutes: Routes = [
   {
     path: 'content',
     component: NavComponent,
+    canActivate: [AuthGuard],
     children: [
       //{ path: '', component: DashboardComponent },
       //{ path: 'dashboard', component: DashboardComponent },
@@ -24,7 +28,8 @@ const appRoutes: Routes = [
   },
   {
     path: '**',
-    component: NavComponent
+    component: NavComponent,
+    canActivate: [AuthGuard]
   }
 ];
 
