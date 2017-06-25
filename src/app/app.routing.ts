@@ -1,10 +1,12 @@
 import { Routes, RouterModule } from '@angular/router';
+import { AuthGuard } from './_services/auth.guard';
+
 //import {AnalysisComponent} from './module/view.analysis';
 import { Shop_bookM_dataChartsComponent } from './charts/lineCharts/shop_book-m_data.component';
 import { NavComponent } from './dashboard/nav.component';
 import { LoginComponent } from './login/login.component';
 
-import { AuthGuard } from './_services/auth.guard';
+
 
 const appRoutes: Routes = [
   {

@@ -2,11 +2,18 @@ import { BrowserModule } from '@angular/platform-browser';
 import { LocationStrategy, HashLocationStrategy, PathLocationStrategy } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpModule, XSRFStrategy, Http } from '@angular/http';
+import { HttpModule, XSRFStrategy, Http, RequestOptions } from '@angular/http';
+
+
+import { provideAuth, AuthHttp, AuthConfig } from 'angular2-jwt';
+
+import { AuthGuard } from './_services/auth.guard';
+
+
 import { IlmsCookieStrategy } from '../main';
 
 import { ChartsModule } from 'ng2-charts/ng2-charts';
-import { AlertModule } from 'ng2-bootstrap/alert';
+//import { AlertModule } from 'ng2-bootstrap/alert';
 
 import { routing } from './app.routing';
 
@@ -17,6 +24,10 @@ import { LoginComponent } from './login/login.component';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { AlertService, AuthenticationService } from './_services/index';
 
+
+export function authHttpServiceFactory(http: Http, options: RequestOptions) {
+  return new AuthHttp(new AuthConfig({}), http, options);
+}
 
 @NgModule({
   declarations: [
@@ -32,14 +43,23 @@ import { AlertService, AuthenticationService } from './_services/index';
     routing,
     ChartsModule,
     DashboardModule,
-    AlertModule.forRoot()
+    //AlertModule.forRoot()
   ],
   //providers: [{ provide: XSRFStrategy, useValue: IlmsCookieStrategy} ],
   providers: [
     Location,
+
+    {
+      provide: AuthHttp,
+      useFactory: authHttpServiceFactory,
+      deps: [Http, RequestOptions]
+    },
+
+    AuthGuard,
     AlertService,
     AuthenticationService,
-    {provide: LocationStrategy, useClass: PathLocationStrategy}],
+
+    { provide: LocationStrategy, useClass: PathLocationStrategy }],
   //providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
   bootstrap: [AppComponent]
 })

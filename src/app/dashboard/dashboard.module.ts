@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
+
+import { AuthGuard } from '../_services/auth.guard';
+
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { PaginationModule } from 'ng2-bootstrap';
 import { ModalModule } from 'ng2-bootstrap/modal';
@@ -16,6 +19,7 @@ import { FxDatepickerComponent }     from './datepicker.component';
 import { SelectModule } from 'ng2-select';
 //import { RlTagInputModule } from 'angular2-tag-input';
 import { TagInputModule } from 'ng2-tag-input';
+//import { AlertModule } from 'ng2-bootstrap/alert';
 //import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { ClickOutsideModule}   from './ng2-click-outside.module';
@@ -30,9 +34,6 @@ import { MonitorComponent } from '../charts/lineCharts/monitor.component';
 //import { DatatableComponent } from '../tables/datatable/datatable.component';
 //import { BootstrapComponent } from '../bootstraps/static/bootstrap.component';
 //import { PluginComponent } from '../bootstraps/plugin/plugin.component';
-
-import { AUTH_PROVIDERS } from 'angular2-jwt';
-import { AuthGuard } from '../_services/auth.guard';
 
 const tablesRoutes: Routes = [
     {
@@ -68,7 +69,8 @@ const tablesRoutes: Routes = [
         SelectModule,
         TagInputModule,
         //BrowserAnimationsModule,
-        BrowserModule, TooltipModule, ModalModule.forRoot(), DatepickerModule.forRoot(), ClickOutsideModule
+        BrowserModule, TooltipModule, ModalModule.forRoot(), DatepickerModule.forRoot(), ClickOutsideModule,
+        //lertModule.forRoot()
 
     ],
     declarations: [
@@ -84,9 +86,5 @@ const tablesRoutes: Routes = [
         //BootstrapComponent,
         //PluginComponent
     ],
-
-    providers: [
-        AuthGuard, ...AUTH_PROVIDERS
-    ]
 })
 export class DashboardModule { }

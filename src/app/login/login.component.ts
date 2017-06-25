@@ -27,7 +27,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   login_result: any;
 
-  err_tip: string = ' ';
+  public err_tip: string = ' ';
 
   constructor(
     private route: ActivatedRoute,
@@ -76,14 +76,14 @@ export class LoginComponent implements OnInit {
   public err(): void {
     console.log('xxxxxx');
     this.err_tip = '用户名或密码错误';
-    this.alerts = [];
-    //this.alerts = [
-    //  {
-    //    type: 'danger',
-    //    msg: `登录失败, 用户名或密码错误`,
-    //    timeout: 3000
-    //  }
-    //  ];
+    //this.alerts = [];
+    this.alerts = [
+      {
+        type: 'danger',
+        msg: `登录失败, 用户名或密码错误`,
+        timeout: 3000
+      }
+    ];
 
     //this.alerts = this.alerts.map((alert: any) => Object.assign({}, alert)); //不用处理, 否则出现闪动
   }
