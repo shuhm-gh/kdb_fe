@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
   public err(): void {
     console.log('xxxxxx');
     this.err_tip = '用户名或密码错误';
+    this.alerts = [];
     //this.alerts = [
     //  {
     //    type: 'danger',
