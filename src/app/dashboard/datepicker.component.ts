@@ -1,5 +1,6 @@
 import { NgModule, Component, Input, Output, EventEmitter, AfterViewInit } from '@angular/core';
 import { DatePipe } from '@angular/common';
+import * as moment from 'moment';
 
 @Component({
     selector: 'fx-datepicker',
@@ -23,7 +24,9 @@ export class FxDatepickerComponent implements AfterViewInit {
     @Output() dateModelChange: EventEmitter<Date> = new EventEmitter();
     private showDatepicker: boolean = false;
 
-    constructor(private datePipe: DatePipe) { }
+    constructor(private datePipe: DatePipe) {
+        moment.locale('zh-cn');
+     }
 
     private transformDate(date:Date):string {
         var d = new DatePipe('pt-PT').transform(date, 'yyyy/MM/dd');
@@ -58,7 +61,7 @@ export class FxDatepickerComponent implements AfterViewInit {
         this.close();
     }
     onClickedOutside(event) {
-        console.log("onClickedOutside", event);
+        //console.log("onClickedOutside", event);
         if (this.showDatepicker) this.close();
     }
     

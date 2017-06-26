@@ -1,53 +1,47 @@
 <div class="row">
+  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
+    <ng-select [allowClear]="true" [items]="book_list" [disabled]="disabled" (data)="refreshValueBook($event)" (selected)="selected_book($event)"
+      (removed)="removed($event)" (typed)="typed($event)" placeholder="ISBN">
+    </ng-select>
+  </div>
+
+  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
+    <ng-select [allowClear]="true" [items]="period" [disabled]="disabled" (data)="refreshPeriod($event)" (selected)="selected_period($event)"
+      (removed)="removed($event)" (typed)="typed($event)" placeholder="周期">
+    </ng-select>
+  </div>
+
+  <div class="col-xs-2 " style="width: 300px; height: 30px;">
+    <!-- {{dateValue | date:"yyyy/MM/dd "}} -->
+    <fx-datepicker [id]="demo-date" [value]="date"></fx-datepicker>
+  </div>
+
+  <div class="col-xs-2 ">
+    <button type="button " class="btn btn-danger custom-button-width .navbar-right " (click)="query() ">查询</button>
+    <!--<span class="btn btn-primary " onclick="randomize() "><span class="glyphicon glyphicon-upload " aria-hidden="true "></span> Update</span>-->
+  </div>
   <!--
-  <div class="col-md-6">
-
-    <canvas baseChart class="chart" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions" [colors]="lineChartColours"
-      [legend]="lineChartLegend" [chartType]="lineChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)">
-    </canvas>
-  </div>
-  -->
-
-  <div class="row">
-    <div class="col-xs-2">
-      <form class="form-inline" role="form">
-        <div class="form-group">
-          <label class="form-label">ISBN</label>
-          <input type="text" class="form-control" style="width: 150px;">
-        </div>
-      </form>
+    <div class="col-xs-4 " style="width: 300px; margin-bottom: 20px; ">
+      <ng-select #select [allowClear]="true " [items]="template_list " [disabled]="disabled " (data)="refreshValueTemplate($event) "
+        (selected)="selected_template($event) " (removed)="removed($event) " (typed)="typed($event) " placeholder="模板 ">
+      </ng-select>
     </div>
 
-    <div class="col-xs-2">
-      <!-- {{dateValue | date:"yyyy/MM/dd"}} -->
-      <fx-datepicker [id]="'demo-date'" [value]="date"></fx-datepicker>
+    <div class="col-xs-2 ">
+      <button type="button " class="btn btn-danger custom-button-width .navbar-right ">保存模板</button>
+      <button type="button " class="btn btn-danger custom-button-width .navbar-right " (click)="randomize() ">查询</button>
+      <!--<span class="btn btn-primary " onclick="randomize() "><span class="glyphicon glyphicon-upload " aria-hidden="true "></span> Update</span>->
     </div>
+    -->
+</div>
 
-    <div class="col-xs-1">
-      <select class="selectpicker" style="width: 80px; height: 30px;">
-        <option>模板一</option>
-        <option>模板二</option>
-        <option>模板三</option>
-      </select>
-    </div>
-
-    <div class="col-xs-2">
-      <button type="button" class="btn btn-danger custom-button-width .navbar-right">保存模板</button>
-      <button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="randomize()">查询</button>
-      <!--<span class="btn btn-primary" onclick="randomize()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Update</span>-->
-    </div>
-  </div>
-
-  <div class="col-md-6" style="margin-bottom: 10px;">
-    <table class="table table-responsive table-condensed">
-      <tr>
-        <th *ngFor="let label of lineChartLabels">{{label}}</th>
-      </tr>
-      <tr *ngFor="let d of lineChartData">
-        <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
-      </tr>
-    </table>
-  </div>
-
-
+<div class="col-md-6 " style="margin-bottom: 10px; ">
+  <table class="table table-responsive table-condensed ">
+    <tr>
+      <th *ngFor="let column of columns ">{{column}}</th>
+    </tr>
+    <tr *ngFor="let d of data ">
+      <td *ngFor="let _ of columns; let j=index ">{{d && d[j]}}</td>
+    </tr>
+  </table>
 </div>
