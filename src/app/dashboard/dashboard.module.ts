@@ -8,6 +8,7 @@ import { AuthGuard } from '../_services/auth.guard';
 import { ChartsModule } from 'ng2-charts/ng2-charts';
 import { PaginationModule } from 'ng2-bootstrap';
 import { ModalModule } from 'ng2-bootstrap/modal';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { FileUploadModule } from 'ng2-file-upload';
 
@@ -15,7 +16,8 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import {TooltipModule, DatepickerModule} from 'ng2-bootstrap';
-import { FxDatepickerComponent }     from './datepicker.component';
+import { FxDatepickerComponent } from './datepicker.component';
+import { TableDemoComponent } from './table';
 import { SelectModule } from 'ng2-select';
 //import { RlTagInputModule } from 'angular2-tag-input';
 import { TagInputModule } from 'ng2-tag-input';
@@ -63,18 +65,24 @@ const tablesRoutes: Routes = [
         CommonModule,
         RouterModule.forChild(tablesRoutes),
         ChartsModule,
-        PaginationModule,
+        PaginationModule.forRoot(),
         Ng2SmartTableModule,
         FileUploadModule,
         SelectModule,
         TagInputModule,
         //BrowserAnimationsModule,
-        BrowserModule, TooltipModule, ModalModule.forRoot(), DatepickerModule.forRoot(), ClickOutsideModule,
+        BrowserModule,
+        TooltipModule,
+        ModalModule.forRoot(),
+        DatepickerModule.forRoot(),
+        ClickOutsideModule,
+        Ng2TableModule,
         //lertModule.forRoot()
 
     ],
     declarations: [
         FxDatepickerComponent,
+        TableDemoComponent,
         NavComponent,
         //DashboardComponent,
         BookM_shopM_dataTableComponent,
