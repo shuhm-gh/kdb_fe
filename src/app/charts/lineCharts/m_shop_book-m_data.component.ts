@@ -93,7 +93,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   }
 
   public query() {
-    return this.http.post(globals.api_base_url+'/api/query_mshopbook_data', JSON.stringify({'type':this.datatype, 'data':this.tag_list}))
+    return this.http.post(globals.api_base_url+'/api/query_mshopbook_data', JSON.stringify({'type':this.datatype, 'data':this.tag_list}), { withCredentials: true })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let res = response.json();
@@ -136,7 +136,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
       //'type': this.datatype,
       'data': this.tag_list
     }
-    return this.http.post(globals.api_base_url+'/api/save_template', JSON.stringify(this.template))
+    return this.http.post(globals.api_base_url+'/api/save_template', JSON.stringify(this.template), { withCredentials: true })
     //return this.http.post('http://localhost:8888/api/save_template', JSON.stringify(this.template))
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
