@@ -1,47 +1,31 @@
 <div class="row">
+  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
+    <ng-select [allowClear]="true" [items]="category_list" [disabled]="disabled" (data)="refreshValueDatatype($event)" (selected)="selected_datatype($event)"
+      (removed)="removed($event)" (typed)="typed($event)" placeholder="类别">
+    </ng-select>
+  </div>
 
-  <div class="col-xs-2">
-    <select class="selectpicker" style="height: 30px;">
-        <option>办公软件</option>
-        <option>图形图象/视频</option>
-        <option>编程语言与程序设计</option>
-        <option>数据库/算法</option>
-        <option>操作系统/移动开发</option>
-        <option>网站设计/网络技术</option>
-        <option>AutoCAD/辅助设计</option>
-        <option>硬件/维护</option>
-        <option>计算机理论</option>
-        <option>IT人文</option>
-      </select>
+  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
+    <ng-select [allowClear]="true" [items]="formula_list" [disabled]="disabled" (data)="refreshValueDatatype($event)" (selected)="selected_datatype($event)"
+      (removed)="removed($event)" (typed)="typed($event)" placeholder="公式">
+    </ng-select>
+  </div>
+
+  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
+    <ng-select [allowClear]="true" [items]="period_list" [disabled]="disabled" (data)="refreshPeriod($event)" (selected)="selected_period($event)"
+      (removed)="removed($event)" (typed)="typed($event)" placeholder="周期">
+    </ng-select>
+  </div>
+
+  <div class="col-xs-2 " style="width: 300px; height: 30px;">
+    <!-- {{dateValue | date:"yyyy/MM/dd "}} -->
+    <fx-datepicker [id]="demo-date" [value]="date"></fx-datepicker>
   </div>
 
   <div class="col-xs-2">
-    <!-- {{dateValue | date:"yyyy/MM/dd"}} -->
-    <fx-datepicker [id]="'demo-date'" [value]="date"></fx-datepicker>
-  </div>
-
-  <div class="col-xs-1">
-    <select class="selectpicker" style="width: 80px; height: 30px;">
-        <option>模板一</option>
-        <option>模板二</option>
-        <option>模板三</option>
-      </select>
-  </div>
-
-  <div class="col-xs-2">
-    <button type="button" class="btn btn-danger custom-button-width .navbar-right">保存模板</button>
-    <button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="randomize()">查询</button>
+    <button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="query()">查询</button>
     <!--<span class="btn btn-primary" onclick="randomize()"><span class="glyphicon glyphicon-upload" aria-hidden="true"></span> Update</span>-->
   </div>
 </div>
 
-<div class="col-md-6" style="margin-bottom: 10px;">
-  <table class="table table-responsive table-condensed">
-    <tr>
-      <th *ngFor="let label of lineChartLabels">{{label}}</th>
-    </tr>
-    <tr *ngFor="let d of lineChartData">
-      <td *ngFor="let label of lineChartLabels; let j=index">{{d && d.data[j]}}</td>
-    </tr>
-  </table>
-</div>
+<ktable [label]='test_label' [value]='test_value'> </ktable>
