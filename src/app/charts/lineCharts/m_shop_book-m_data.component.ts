@@ -351,7 +351,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   }
 
   public selected_datatype(value:any):void {
-    this.datatype = value.text;
+    this.datatype = value.id;
     console.log('Selected value is: ', value);
   }
 

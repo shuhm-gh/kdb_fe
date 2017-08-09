@@ -40,7 +40,7 @@ export class MonitorComponent implements OnInit {
     { 'id': '计算机理论', 'text': '计算机理论' },
     { 'id': 'IT人文', 'text': 'IT人文' },
   ];
-  test_value = TableData;
+  test_value = []; //TableData;
   test_label = [
     { title: '店铺', name: 'shop', sort: '' },
     { title: '书目', name: 'price', sort: 'asc' },

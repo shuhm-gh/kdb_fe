@@ -1,4 +1,8 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, OnChanges } from '@angular/core';
+import { DatePipe } from '@angular/common';
+
+import * as moment from 'moment';
+
 import { TableData } from './table-data';
 
 // webpack html imports
@@ -6,9 +10,10 @@ let template = require('./table.html');
 
 @Component({
     selector: 'ktable',
+    providers: [DatePipe],
     template
 })
-export class TableDemoComponent implements AfterViewInit  {
+export class TableDemoComponent implements AfterViewInit, OnChanges  {
     @Input() value: Array<any>;
     @Input() label: Array<any>;
     public rows: Array<any> = [];
@@ -35,9 +40,11 @@ export class TableDemoComponent implements AfterViewInit  {
         className: ['table-striped', 'table-bordered']
     };
 
-    private data: Array<any> = this.value;
+    //private data: Array<any> = this.value;
+    public data: Array<any> = this.value;
 
-    public constructor() {
+    public constructor(private datePipe: DatePipe) {
+        moment.locale('zh-cn');
         console.log('constructor');
         //this.columns = this.label;
     }
@@ -107,7 +114,9 @@ export class TableDemoComponent implements AfterViewInit  {
         filteredData.forEach((item: any) => {
             let flag = false;
             this.columns.forEach((column: any) => {
+                //console.log(item, column);
                 if (item[column.name].toString().match(this.config.filtering.filterString)) {
+                //if (item[column.name].match(this.config.filtering.filterString)) {
                     flag = true;
                 }
             });
@@ -139,7 +148,7 @@ export class TableDemoComponent implements AfterViewInit  {
         console.log(data);
     }
 
-    ngAfterViewInit() {
+    public refresh() {
         console.log('ngAfterViewInit');
         this.columns = this.label;
         this.data = this.value;
@@ -152,5 +161,37 @@ export class TableDemoComponent implements AfterViewInit  {
         filtering: { filterString: '' },
         className: ['table-striped', 'table-bordered']
     };
+    }
+
+    ngOnChanges() {
+        console.log('ngOnChanges', this.data);
+
+        this.columns = this.label;
+        this.data = this.value;
+        this.onChangeTable(this.config);
+        this.length = this.data.length;
+
+        this.config = {
+            paging: true,
+            sorting: { columns: this.columns },
+            filtering: { filterString: '' },
+            className: ['table-striped', 'table-bordered']
+        }
+        //this.onChangeTable(this.config);
+    }
+
+    ngAfterViewInit() {
+        //console.log('ngAfterViewInit');
+        //this.columns = this.label;
+        //this.data = this.value;
+        //this.onChangeTable(this.config);
+        //this.length = this.data.length;
+//
+        //this.config = {
+        //    paging: true,
+        //    sorting: { columns: this.columns },
+        //    filtering: { filterString: '' },
+        //    className: ['table-striped', 'table-bordered']
+        //};
     }
 }
