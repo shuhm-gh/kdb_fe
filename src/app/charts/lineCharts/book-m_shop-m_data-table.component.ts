@@ -3,12 +3,17 @@ import { NavComponent } from '../../dashboard/nav.component';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { NgClass } from '@angular/common';
 
+import { Http, Headers, Response } from '@angular/http';
+
 import * as moment from 'moment';
 
 import { DatepickerModule } from 'ng2-bootstrap';
 import { filter } from "rxjs/operator/filter";
 
 import { TableData } from '../../dashboard/table-data';
+
+import * as globals from '../../_services/globals';
+import { TableDemoComponent } from '../../dashboard/table';
 
 @Component({
   selector: 'app-charts',
@@ -20,8 +25,9 @@ export class BookM_shopM_dataTableComponent implements OnInit {
     private parent: NavComponent,
     private route: ActivatedRoute,
     private router: Router,
+    private http: Http,
   ) {
-    this.test_value = TableData;
+    this.test_value = []; // = TableData;
     this.test_label = [
       {title:'店铺', name:'shop', sort: ''},
       {title:'售价', name:'price', sort: 'asc'}, 
@@ -35,7 +41,17 @@ export class BookM_shopM_dataTableComponent implements OnInit {
     console.log(this.date);
   }
 
+  public get_data() {
+    return this.http.post(globals.api_base_url+'/api/query_book_mshop_init_data', JSON.stringify({}), { withCredentials: true })
+            .map((response: Response) => {
+                // login successful if there's a jwt token in the response
+                let res = response.json();
+                console.log(res);
+                this.book_list = res.data;
+            }).toPromise();
+  }
   ngOnInit() {
+    this.get_data().then();
     this.parent.setActiveByPath("charts", this.parent.bookM_shopM_dataTable);
   };
 
@@ -46,7 +62,7 @@ export class BookM_shopM_dataTableComponent implements OnInit {
     { 'id': '2w', 'text': '2周' },
     { 'id': '1m', 'text': '1月' },
     ];
-  public book_list: Array<any> = [{ 'id': 'xxx', 'text': '人民邮电出版社官方旗舰店' }];
+  public book_list: Array<any> = [{ 'id': '9787115394392', 'text': 'Python参考手册(第4版·修订版)' }];
 
   public data: Array<any> = [
     ['人邮', 59, 80, 81, 56, 55, 40],
@@ -55,7 +71,7 @@ export class BookM_shopM_dataTableComponent implements OnInit {
   ];
 
   public test_label: Array<any>;
-  public test_value: Array<any> = TableData;
+  public test_value: Array<any>; // = TableData;
   public columns: Array<any> = ['店铺', '售价', '折扣', '销量', '评论数', '直通车投入'];
   public lineChartOptions: any = {
     animation: false,
@@ -65,9 +81,23 @@ export class BookM_shopM_dataTableComponent implements OnInit {
   public period_select;
   public book_select;
 
-  query() {
-    console.log('query data');
+  public query() {
+    if (!this.book_select || !this.period_select) {
+      return;
+    }
+    return this.http.post(globals.api_base_url+'/api/query_book_mshop_data', JSON.stringify({'book':this.book_select, 'period':this.period_select}), { withCredentials: true })
+            .map((response: Response) => {
+                // login successful if there's a jwt token in the response
+                let res = response.json();
+                console.log(res, 'xxx');
+
+                // 曲线图数据
+                this.test_value = res.data.slice();
+                //table.data = res.data;
+              }
+          ).toPromise();
   }
+
 
   public refreshPeriod(value:any):void {
     this.value = value;
