@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
 
-import * as globals from 'globals';
+import * as globals from './globals';
 
 @Injectable()
 export class svc {

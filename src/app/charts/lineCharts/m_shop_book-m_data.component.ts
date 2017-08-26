@@ -48,23 +48,25 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
                 //let _tags: Array<string>;
 
                 // 曲线图数据
-                for (let i = 0; i<res.data.data.length; i++) {
-                  let _item = res.data.data[i];
-                  let _data: Array<any> = [{data:[], label:''}];
-                  _data[0].data = _item.value;
+                if (res.data) {
+                  for (let i = 0; i < res.data.data.length; i++) {
+                    let _item = res.data.data[i];
+                    let _data: Array<any> = [{ data: [], label: '' }];
+                    _data[0].data = _item.value;
 
-                  //label, 店铺#书目
-                  //todo
-                  _data[0].label = this.datatype;
+                    //label, 店铺#书目
+                    //todo
+                    _data[0].label = this.datatype;
 
-                  //tag
-                  this.tag_list.push({'shop':_item.shop, 'book':_item.book});
-                  this.tag_list_v.push(_item['shop']['text'] + '#' + _item['book']['text']);
+                    //tag
+                    this.tag_list.push({ 'shop': _item.shop, 'book': _item.book });
+                    this.tag_list_v.push(_item['shop']['text'] + '#' + _item['book']['text']);
 
-                  this.lineChartDataArray.push(_data);
-                  
-                  let _x = _item.date;
-                  this.lineChartLabelArray.push(_x);
+                    this.lineChartDataArray.push(_data);
+
+                    let _x = _item.date;
+                    this.lineChartLabelArray.push(_x);
+                  }
                 }
                 this.tag_list_v_bk = this.tag_list_v;
 
@@ -96,6 +98,9 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   }
 
   public query() {
+    if (!this.datatype || !this.period_select) {
+      return;
+    }
     return this.http.post(globals.api_base_url+'/api/query_mshopbook_data', JSON.stringify({'type':this.datatype, 'data':this.tag_list, 'period':this.period_select.days}), { withCredentials: true })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
@@ -174,10 +179,8 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
       //first = false;
     }
     console.log('after get data');
-    console.log(this.book_list);
+    //console.log(this.book_list);
     
-
-
     this.parent.setActiveByPath("charts", this.parent.m_shop_bookM_dataCharts);
   };
 
@@ -212,7 +215,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     animation: false,
     responsive: true,
   };
-  public period_select = {'days':7};
+  public period_select; // = {'days':7};
   public period: Array<any> = [
     { 'id': '1', 'text': '今天' },
     { 'id': '3', 'text': '3天' },
@@ -368,6 +371,11 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   public selected_datatype(value:any):void {
     this.datatype = value.id;
     console.log('Selected value is: ', value);
+  }
+
+  public refreshPeriod(value:any):void {
+    this.value = value;
+    console.log('refreshValue: ', this.value);
   }
 
   public selected_period(value:any):void {
