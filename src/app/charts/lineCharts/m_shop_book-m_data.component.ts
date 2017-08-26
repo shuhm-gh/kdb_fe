@@ -43,7 +43,23 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
                 let res = response.json();
                 console.log(res);
 
+                //datatype
+                this.datatype_list = res.datatype_list
+
+                //template
+                this.template_list = res.template_list;
+
+                //shop
+                this.shop_book_list = res.shop_book_list
+
                 //类型
+                //console.log(res.datatype_list);
+                //for (var i=0; i<this.datatype_list.length; i++) {
+                //  if (this.datatype_list[i].id == res.data.type) {
+                //      this.datatype = this.datatype_list[i].text;
+                //      break;
+                //  }
+                //}
                 this.datatype = res.data.type;
                 //let _tags: Array<string>;
 
@@ -70,14 +86,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
                 }
                 this.tag_list_v_bk = this.tag_list_v;
 
-                //datatype
-                this.datatype_list = res.datatype_list
-
-                //template
-                this.template_list = res.template_list;
-
-                //shop
-                this.shop_book_list = res.shop_book_list
+                
 
                 //book
                 //let _book_list: Array<any> = []

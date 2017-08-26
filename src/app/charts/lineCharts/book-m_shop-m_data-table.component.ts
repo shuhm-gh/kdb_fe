@@ -47,9 +47,28 @@ export class BookM_shopM_dataTableComponent implements OnInit {
                 // login successful if there's a jwt token in the response
                 let res = response.json();
                 console.log(res);
-                this.book_list = res.data;
+                this.book_list = res.book_list;
+                this.test_value = res.data;
             }).toPromise();
   }
+
+  public query() {
+    if (!this.book_select || !this.period_select) {
+      return;
+    }
+    return this.http.post(globals.api_base_url+'/api/query_book_mshop_data', JSON.stringify({'book':this.book_select, 'period':this.period_select.days}), { withCredentials: true })
+            .map((response: Response) => {
+                // login successful if there's a jwt token in the response
+                let res = response.json();
+                console.log(res, 'xxx');
+
+                // 曲线图数据
+                this.test_value = res.data; //.slice();
+                //table.data = res.data;
+              }
+          ).toPromise();
+  }
+
   ngOnInit() {
     this.get_data().then();
     this.parent.setActiveByPath("charts", this.parent.bookM_shopM_dataTable);
@@ -81,23 +100,6 @@ export class BookM_shopM_dataTableComponent implements OnInit {
   public value;
   public period_select;
   public book_select;
-
-  public query() {
-    if (!this.book_select || !this.period_select) {
-      return;
-    }
-    return this.http.post(globals.api_base_url+'/api/query_book_mshop_data', JSON.stringify({'book':this.book_select, 'period':this.period_select.days}), { withCredentials: true })
-            .map((response: Response) => {
-                // login successful if there's a jwt token in the response
-                let res = response.json();
-                console.log(res, 'xxx');
-
-                // 曲线图数据
-                this.test_value = res.data.slice();
-                //table.data = res.data;
-              }
-          ).toPromise();
-  }
 
 
   public refreshPeriod(value:any):void {
