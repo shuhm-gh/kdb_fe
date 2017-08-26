@@ -10,11 +10,14 @@ import { SelectComponent } from 'ng2-select';
 
 import * as globals from '../../_services/globals'
 
+var first = true;
+
 @Component({
   selector: 'app-charts',
   templateUrl: './m_shop_book-m_data.component.html',
   encapsulation: ViewEncapsulation.None  // Enable dynamic HTML styles
 })
+
 export class M_shop_bookM_dataChartsComponent implements OnInit {
 
   constructor(
@@ -93,7 +96,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
   }
 
   public query() {
-    return this.http.post(globals.api_base_url+'/api/query_mshopbook_data', JSON.stringify({'type':this.datatype, 'data':this.tag_list}), { withCredentials: true })
+    return this.http.post(globals.api_base_url+'/api/query_mshopbook_data', JSON.stringify({'type':this.datatype, 'data':this.tag_list, 'period':this.period_select.days}), { withCredentials: true })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let res = response.json();
@@ -165,8 +168,11 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
 
 
   ngOnInit() {
-    console.log('init');
-    this.get_data().then();
+    console.log('init', first);
+    if (first) {
+      this.get_data().then();
+      //first = false;
+    }
     console.log('after get data');
     console.log(this.book_list);
     
@@ -206,6 +212,15 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
     animation: false,
     responsive: true,
   };
+  public period_select = {'days':7};
+  public period: Array<any> = [
+    { 'id': '1', 'text': '今天' },
+    { 'id': '3', 'text': '3天' },
+    { 'id': '7', 'text': '1周' },
+    { 'id': '14', 'text': '2周' },
+    { 'id': '30', 'text': '1月' },
+    ];
+
   public lineChartColours: Array<any> = [
     { // green
       backgroundColor: 'rgba(202,252,209,0.2)',
@@ -352,6 +367,12 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
 
   public selected_datatype(value:any):void {
     this.datatype = value.id;
+    console.log('Selected value is: ', value);
+  }
+
+  public selected_period(value:any):void {
+    this.period_select = value;
+    this.period_select.days = value.id;
     console.log('Selected value is: ', value);
   }
 

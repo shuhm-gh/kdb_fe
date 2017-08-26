@@ -17,9 +17,15 @@
                 <span class="sr-only">Add Price</span></button>
   </div>
 
-  <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
+  <div class="col-xs-4" style="width: 150px; margin-bottom: 20px;">
     <ng-select [allowClear]="true" [items]="datatype_list" [disabled]="disabled" (data)="refreshValueDatatype($event)" (selected)="selected_datatype($event)"
       (removed)="removed($event)" (typed)="typed($event)" placeholder="类型">
+    </ng-select>
+  </div>
+
+  <div class="col-xs-4" style="width: 150px; margin-bottom: 20px;">
+    <ng-select [allowClear]="true" [items]="period" [disabled]="disabled" (data)="refreshPeriod($event)" (selected)="selected_period($event)"
+      (removed)="removed($event)" (typed)="typed($event)" placeholder="周期">
     </ng-select>
   </div>
 

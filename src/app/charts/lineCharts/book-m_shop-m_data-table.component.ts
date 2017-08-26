@@ -57,10 +57,11 @@ export class BookM_shopM_dataTableComponent implements OnInit {
 
   public template_list: Array<any> = [{ 'id': 'xxx', 'text': 'xxx' }];
   public period: Array<any> = [
-    { 'id': '3d', 'text': '3天' },
-    { 'id': '1w', 'text': '1周' },
-    { 'id': '2w', 'text': '2周' },
-    { 'id': '1m', 'text': '1月' },
+    { 'id': '1', 'text': '今天' },
+    { 'id': '3', 'text': '3天' },
+    { 'id': '7', 'text': '1周' },
+    { 'id': '14', 'text': '2周' },
+    { 'id': '30', 'text': '1月' },
     ];
   public book_list: Array<any> = [{ 'id': '9787115394392', 'text': 'Python参考手册(第4版·修订版)' }];
 
@@ -85,7 +86,7 @@ export class BookM_shopM_dataTableComponent implements OnInit {
     if (!this.book_select || !this.period_select) {
       return;
     }
-    return this.http.post(globals.api_base_url+'/api/query_book_mshop_data', JSON.stringify({'book':this.book_select, 'period':this.period_select}), { withCredentials: true })
+    return this.http.post(globals.api_base_url+'/api/query_book_mshop_data', JSON.stringify({'book':this.book_select, 'period':this.period_select.days}), { withCredentials: true })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let res = response.json();
@@ -106,6 +107,7 @@ export class BookM_shopM_dataTableComponent implements OnInit {
 
   public selected_period(value:any):void {
     this.period_select = value;
+    this.period_select.days = value.id;
     console.log('Selected value is: ', value);
   }
 
