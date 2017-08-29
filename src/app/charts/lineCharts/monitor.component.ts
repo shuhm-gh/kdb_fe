@@ -29,20 +29,21 @@ export class MonitorComponent implements OnInit {
   }
 
   public get_data() {
-    return this.http.post(globals.api_base_url+'/api/query_concerned_data', JSON.stringify({}), { withCredentials: true })
+    return this.http.post(globals.api_base_url+'/api/query_concerned_init_data', JSON.stringify({}), { withCredentials: true })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let res = response.json();
                 console.log(res);
-                this.category_list = res.data;
+                this.category_list = res.category_list;
+                this.formula_list = res.formula_list;
             }).toPromise();
   }
 
   public query() {
-    if (!this.category || !this.period || !this.formula) {
+    if (!this.category || !this.formula) {
       return;
     }
-    return this.http.post(globals.api_base_url+'/api/query_book_mshop_data', JSON.stringify({'book':this.category, 'period':this.period.days, 'formula':this.formula}), { withCredentials: true })
+    return this.http.post(globals.api_base_url+'/api/query_concerned_data', JSON.stringify({'category':this.category, 'formula':this.formula.id}), { withCredentials: true })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let res = response.json();
@@ -96,11 +97,7 @@ export class MonitorComponent implements OnInit {
     { 'id': '30', 'text': '1月' },
     ];
 
-  public formula_list: Array<any> = [
-    { 'id': '1', 'text': '公式一' },
-    { 'id': '2', 'text': '公式二' },
-    { 'id': '3', 'text': '公式三' },
-  ];
+  public formula_list: Array<any> = [];
 
   // events
   public chartClicked(e: any): void {

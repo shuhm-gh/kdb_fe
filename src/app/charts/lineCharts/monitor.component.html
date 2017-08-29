@@ -1,21 +1,23 @@
 <div class="row">
   <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
-    <ng-select [allowClear]="true" [items]="category_list" [disabled]="disabled" (data)="refreshValueDatatype($event)" (selected)="selected_datatype($event)"
+    <ng-select [allowClear]="true" [items]="category_list" [disabled]="disabled" (data)="refreshValueCate($event)" (selected)="selected_category($event)"
       (removed)="removed($event)" (typed)="typed($event)" placeholder="类别">
     </ng-select>
   </div>
 
   <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
-    <ng-select [allowClear]="true" [items]="formula_list" [disabled]="disabled" (data)="refreshValueDatatype($event)" (selected)="selected_datatype($event)"
+    <ng-select [allowClear]="true" [items]="formula_list" [disabled]="disabled" (data)="refreshValueFormula($event)" (selected)="selected_formula($event)"
       (removed)="removed($event)" (typed)="typed($event)" placeholder="公式">
     </ng-select>
   </div>
 
+  <!--
   <div class="col-xs-4" style="width: 300px; margin-bottom: 20px;">
     <ng-select [allowClear]="true" [items]="period_list" [disabled]="disabled" (data)="refreshPeriod($event)" (selected)="selected_period($event)"
       (removed)="removed($event)" (typed)="typed($event)" placeholder="周期">
     </ng-select>
   </div>
+  -->
 
   <!--
   <div class="col-xs-2 " style="width: 300px; height: 30px;">
