@@ -82,11 +82,11 @@ export class MonitorComponent implements OnInit {
   test_value = []; //TableData;
   test_label = [
     { title: '店铺', name: 'shop', sort: '' },
-    { title: '书目', name: 'price', sort: 'asc' },
-    { title: '公式', name: 'discount', sort: 'asc' },
-    { title: '类型', name: 'sale', sort: 'asc' },
-    { title: '值', name: 'comment', sort: 'asc' },
-    { title: '日期', name: 'inv', sort: 'asc' }
+    { title: '书目', name: 'book', sort: 'asc' },
+    { title: '类型', name: 'datatype', sort: 'asc' },
+    { title: '值', name: 'value', sort: 'asc' },
+    { title: '公式', name: 'formula', sort: 'asc' },
+    { title: '日期', name: 'date', sort: 'asc' }
   ];
 
   public period_list: Array<any> = [
