@@ -64,7 +64,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
                 //let _tags: Array<string>;
 
                 // 曲线图数据
-                if (res.data) {
+                if (res.data.length > 0) {
                   for (let i = 0; i < res.data.data.length; i++) {
                     let _item = res.data.data[i];
                     let _data: Array<any> = [{ data: [], label: '' }];
