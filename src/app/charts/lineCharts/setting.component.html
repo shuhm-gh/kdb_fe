@@ -1,14 +1,39 @@
 <h3>用户列表</h3>
-<button type="button" class="btn btn-primary" (click)="isCollapsedContent = !isCollapsedContent">Show / Hide Content (Toggle collapse)
-                </button>
+<button type="button" class="btn btn-primary" (click)="isCollapsedContent = !isCollapsedContent; isCollapsedContent1 = !isCollapsedContent1">添加用户</button>
 <hr>
 <div [collapse]="isCollapsedContent" class="card card-block card-header">
   <div class="well well-lg">
-    HTML content goes here !
-    <b>bold text</b> <br>
-    <span>this is a collapse example</span>
+    <ktable [label]='test_label' [value]='test_value'> </ktable>
   </div>
 </div>
+<div [collapse]="isCollapsedContent1" class="card card-block card-header">
+  <div class="well well-lg">
+    <form action="#" id="loginForm" (ngSubmit)="add(userLoginForm)" #userLoginForm="ngForm">
+      <div class="form-group">
+        <label class="control-label" for="username">用户名</label>
+        <!--input type="text" placeholder="example@gmail.com" title="请输入用户名" required value="" name="username" id="username" class="form-control"-->
+        <input type="text" title="请输入用户名" [(ngModel)]="user.user" name="_username" id="username" class="form-control mr-sm-2" required>
+        <!--<span
+                                class="help-block small">你唯一的看店宝账户</span>-->
+      </div>
+      <div class="form-group">
+        <label class="control-label" for="password">密码</label>
+        <input type="password" title="请输入密码" [(ngModel)]="user.pass" name="_password" id="password" class="form-control mr-sm-2"
+          required>
+      </div>
+      <div class="form-group">
+
+          <ng-select [allowClear]="true" [items]="role_list" [disabled]="disabled" (data)="refreshValueRole($event)" (selected)="selected_role($event)"
+            (removed)="removed($event)" (typed)="typed($event)" placeholder="角色">
+          </ng-select>
+      </div>
+      <button class="btn btn-success btn-block" type="submit">添加</button>
+
+      <!--<a class="btn btn-default btn-block" href="#">注册</a>-->
+    </form>
+  </div>
+</div>
+
 
 <div>
   hello world
@@ -23,7 +48,7 @@
 </div>
 
 
-<ktable [label]='test_label' [value]='test_value'> </ktable>
+
 
 <!--
 <div>

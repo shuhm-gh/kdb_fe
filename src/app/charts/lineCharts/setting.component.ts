@@ -8,9 +8,29 @@ import { Component } from '@angular/core';
 export class SettingComponent {
   //collapse content
   public isCollapsedContent: boolean = false;
+  public isCollapsedContent1: boolean = true;
   //collapse image (example)
   public isCollapsedImage: boolean = true;
 
+  user = {
+    user: '',
+    role: '',
+    pass: ''
+  }
+
+  role = '';
+  value = '';
+
+  role_list = [
+    {
+      'id': 'admin',
+      'text': '管理员'
+    },
+    {
+      'id': 'normal',
+      'text': '普通用户'
+    },
+  ];
   test_value = [
     {
         user: 'kylin',
@@ -71,4 +91,20 @@ export class SettingComponent {
   modify(entry) {
     console.log(entry);
   }
+
+  add(info) {
+    console.log(this.user.user, this.user.role, this.user.pass);
+  }
+
+  public refreshValueRole(value:any):void {
+    this.value = value;
+    console.log('refreshValue: ', this.value);
+  }
+
+  public selected_role(value:any):void {
+    this.role = value;
+    this.user.role = value.id;
+    console.log('Selected value is: ', value);
+  }
+
 }
