@@ -1,0 +1,55 @@
+<h3>用户列表</h3>
+<button type="button" class="btn btn-primary" (click)="isCollapsedContent = !isCollapsedContent">Show / Hide Content (Toggle collapse)
+                </button>
+<hr>
+<div [collapse]="isCollapsedContent" class="card card-block card-header">
+  <div class="well well-lg">
+    HTML content goes here !
+    <b>bold text</b> <br>
+    <span>this is a collapse example</span>
+  </div>
+</div>
+
+<div>
+  hello world
+</div>
+
+<h3>Angular 2 Collapse HTML Content (IMAGE)</h3>
+<button type="button" class="btn btn-primary" (click)="isCollapsedImage = !isCollapsedImage">Show / Hide Image (Toggle collapse)
+                </button>
+<hr>
+<div [collapse]="isCollapsedImage" class="card card-block card-header">
+  <img src="http://www.angulartypescript.com/wp-content/uploads/2016/03/car3.jpg" alt="BMW 1">
+</div>
+
+
+<ktable [label]='test_label' [value]='test_value'> </ktable>
+
+<!--
+<div>
+  <h2>用户列表</h2>
+
+  <table>
+    <thead>
+      <td>用户列表</td>
+      <td></td>
+    </thead>
+    <tbody>
+      <tr *ngFor="let entry of user_list; let idx = index">
+        <td style="width: 100px; margin-bottom: 20px;">{{ entry.name }}</td>
+        <td style="width: 100px; margin-bottom: 20px;">{{ entry.role }}</td>
+        <td><input type="radio" name="certificategroup" (change)="onSelectionChange(entry)" [checked]="(idx === 0)" [value]="entry.value"></td>
+        <td style="width: 50px; margin-bottom: 20px;"><button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="modify()">修改</button></td>
+        <td style="width: 50px; margin-bottom: 20px;"><button type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="remove()">删除</button></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <pre>
+{{ this.selectedEntry | json }}
+</pre>
+
+</div>
+-->

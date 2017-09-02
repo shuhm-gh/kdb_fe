@@ -21,6 +21,7 @@ export class NavComponent implements OnInit {
   public m_shop_bookM_dataCharts = "";
   public shop_bookM_dataCharts = "";
   public monitor = "";
+  public setting = "";
   //public pieCharts = "";
   //public dashboard = "";
   //public datatable = "";
@@ -41,6 +42,7 @@ export class NavComponent implements OnInit {
     this.m_shop_bookM_dataCharts = "/main/m_shop_bookM_dataCharts";
     //this.shop_bookM_dataCharts = "/main/shop_bookM_dataCharts";
     this.monitor = "/main/monitor";
+    this.setting = "/main/setting";
     //this.pieCharts = "/main/"+this.para+"/pieCharts";
     //this.dashboard = "/main/"+this.para+"/dashboard";
     //this.datatable = "/main/"+this.para+"/datatable";
@@ -82,6 +84,16 @@ export class NavComponent implements OnInit {
         //name: "Charts",
         type: false,
         href: this.monitor, name: "特殊表现监控"
+        //child: [
+        //  {href: this.lineCharts, name: "Line Charts"},
+        //  {href: this.pieCharts, name: "Pie Charts"}
+        //]
+      },
+      {
+        //href: 'charts',
+        //name: "Charts",
+        type: false,
+        href: this.setting, name: "设置"
         //child: [
         //  {href: this.lineCharts, name: "Line Charts"},
         //  {href: this.pieCharts, name: "Pie Charts"}

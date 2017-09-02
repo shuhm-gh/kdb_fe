@@ -32,6 +32,8 @@ import { BookM_shopM_dataTableComponent } from '../charts/lineCharts/book-m_shop
 import { Shop_bookM_dataChartsComponent } from '../charts/lineCharts/shop_book-m_data.component';
 import { M_shop_bookM_dataChartsComponent } from '../charts/lineCharts/m_shop_book-m_data.component';
 import { MonitorComponent } from '../charts/lineCharts/monitor.component';
+import { SettingComponent } from '../charts/lineCharts/setting.component';
+import { Collapse } from './collapse.component';
 //import { pieChartsComponent } from '../charts/pieCharts/pieCharts.component';
 //import { DatatableComponent } from '../tables/datatable/datatable.component';
 //import { BootstrapComponent } from '../bootstraps/static/bootstrap.component';
@@ -50,6 +52,7 @@ const tablesRoutes: Routes = [
             { path: 'shop_bookM_dataCharts', component: Shop_bookM_dataChartsComponent, canActivate: [AuthGuard] },
             { path: 'm_shop_bookM_dataCharts', component: M_shop_bookM_dataChartsComponent, canActivate: [AuthGuard] },
             { path: 'monitor', component: MonitorComponent, canActivate: [AuthGuard] },
+            { path: 'setting', component: SettingComponent, canActivate: [AuthGuard] },
             //{ path: 'pieCharts', component: pieChartsComponent },
             //{ path: 'datatable', component: DatatableComponent },
             //{ path: 'bootstrap-static', component: BootstrapComponent },
@@ -81,6 +84,7 @@ const tablesRoutes: Routes = [
 
     ],
     declarations: [
+        Collapse,
         FxDatepickerComponent,
         TableDemoComponent,
         NavComponent,
@@ -89,6 +93,7 @@ const tablesRoutes: Routes = [
         M_shop_bookM_dataChartsComponent,
         Shop_bookM_dataChartsComponent,
         MonitorComponent,
+        SettingComponent,
         //pieChartsComponent,
         //DatatableComponent,
         //BootstrapComponent,
