@@ -1,54 +1,100 @@
-<h3>用户列表</h3>
-<button type="button" class="btn btn-primary" (click)="isCollapsedContent = !isCollapsedContent; isCollapsedContent1 = !isCollapsedContent1">添加用户</button>
+<div *ngIf="current_user === 'admin'"><span><font size="5">用户列表</font></span>
+</div>
+
+<!--
+<span *ngIf="current_user !== 'admin'" style="float:right"> <button type="button" [disabled]="!btn_add" class="btn btn-primary" (click)="btn_add = false; isCollapsedContent = !isCollapsedContent; isCollapsedContent1 = !isCollapsedContent1; flag_add='a'">添加用户</button></span>
+-->
+
 <hr>
-<div [collapse]="isCollapsedContent" class="card card-block card-header">
+<div *ngIf="current_user === 'admin'" [collapse]="isCollapsedContent" class="card card-block card-header">
   <div class="well well-lg">
-    <ktable [label]='test_label' [value]='test_value'> </ktable>
+    <!--<ktable [label]='test_label' [value]='test_value'> </ktable> -->
+    <ng2-smart-table font-size="5" [settings]="settings" [source]="data" (deleteConfirm)="onDeleteConfirm($event)"></ng2-smart-table>
   </div>
 </div>
+
+<div *ngIf="current_user !== 'admin'">
+  <form action="#" id="loginForm" (ngSubmit)="add(userLoginForm); btn_add = true; isCollapsedContent = !isCollapsedContent; isCollapsedContent1 = !isCollapsedContent1"
+    #userLoginForm="ngForm">
+    <div class="form-group">
+      <label class="control-label" for="username">用户名</label>
+      <input type="text" title="请输入用户名" [(ngModel)]="user.user" name="_username" id="username" class="form-control mr-sm-2" readonly="readonly"
+        required>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="password">密码</label>
+      <input type="password" title="请输入密码" [(ngModel)]="user.pass" name="_password" id="password" class="form-control mr-sm-2"
+        required>
+    </div>
+    <div class="form-group">
+      <label class="control-label">角色</label>
+      <ng-select [allowClear]="false" [items]="role_list" [active]="[active_role]" [disabled]="true" (data)="refreshValueRole($event)"
+        (selected)="selected_role($event)" (removed)="removed($event)" (typed)="typed($event)">
+      </ng-select>
+    </div>
+    <div class="form-group">
+      <button class="btn btn-success btn-block" type="submit">确定</button>
+      <button type="button" class="btn btn-danger btn-block" (click)="btn_add = true; isCollapsedContent = !isCollapsedContent; isCollapsedContent1 = !isCollapsedContent1">取消</button>
+    </div>
+  </form>
+</div>
+
+<!--
 <div [collapse]="isCollapsedContent1" class="card card-block card-header">
   <div class="well well-lg">
-    <form action="#" id="loginForm" (ngSubmit)="add(userLoginForm)" #userLoginForm="ngForm">
-      <div class="form-group">
-        <label class="control-label" for="username">用户名</label>
-        <!--input type="text" placeholder="example@gmail.com" title="请输入用户名" required value="" name="username" id="username" class="form-control"-->
-        <input type="text" title="请输入用户名" [(ngModel)]="user.user" name="_username" id="username" class="form-control mr-sm-2" required>
-        <!--<span
-                                class="help-block small">你唯一的看店宝账户</span>-->
-      </div>
-      <div class="form-group">
-        <label class="control-label" for="password">密码</label>
-        <input type="password" title="请输入密码" [(ngModel)]="user.pass" name="_password" id="password" class="form-control mr-sm-2"
-          required>
-      </div>
-      <div class="form-group">
-
+    <div *ngIf="flag_add==='a'">
+      <form action="#" id="loginForm" (ngSubmit)="add(userLoginForm); btn_add = true; isCollapsedContent = !isCollapsedContent; isCollapsedContent1 = !isCollapsedContent1"
+        #userLoginForm="ngForm">
+        <div class="form-group">
+          <label class="control-label" for="username">用户名</label>
+          <input type="text" title="请输入用户名" [(ngModel)]="user.user" name="_username" id="username" class="form-control mr-sm-2" required>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="password">密码</label>
+          <input type="password" title="请输入密码" [(ngModel)]="user.pass" name="_password" id="password" class="form-control mr-sm-2"
+            required>
+        </div>
+        <div class="form-group">
+          <label class="control-label">角色</label>
           <ng-select [allowClear]="true" [items]="role_list" [disabled]="disabled" (data)="refreshValueRole($event)" (selected)="selected_role($event)"
-            (removed)="removed($event)" (typed)="typed($event)" placeholder="角色">
+            (removed)="removed($event)" (typed)="typed($event)">
           </ng-select>
-      </div>
-      <button class="btn btn-success btn-block" type="submit">添加</button>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success btn-block" type="submit">确定</button>
+          <button type="button" class="btn btn-danger btn-block" (click)="btn_add = true; isCollapsedContent = !isCollapsedContent; isCollapsedContent1 = !isCollapsedContent1">取消</button>
+        </div>
+      </form>
+    </div>
 
-      <!--<a class="btn btn-default btn-block" href="#">注册</a>-->
-    </form>
+    <div *ngIf="flag_add==='e'">
+      <form action="#" id="loginForm" (ngSubmit)="add(userLoginForm); btn_add = true; isCollapsedContent = !isCollapsedContent; isCollapsedContent1 = !isCollapsedContent1"
+        #userLoginForm="ngForm">
+        <div class="form-group">
+          <label class="control-label" for="username">用户名</label>
+          <input type="text" title="请输入用户名" [(ngModel)]="user.user" name="_username" id="username" class="form-control mr-sm-2" readonly="readonly"
+            required>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="password">密码</label>
+          <input type="password" title="请输入密码" [(ngModel)]="user.pass" name="_password" id="password" class="form-control mr-sm-2"
+            required>
+        </div>
+        <div class="form-group">
+          <label class="control-label">角色</label>
+          <ng-select [allowClear]="false" [items]="role_list" [active]="[active_role]" [disabled]="true" (data)="refreshValueRole($event)"
+            (selected)="selected_role($event)" (removed)="removed($event)" (typed)="typed($event)">
+          </ng-select>
+        </div>
+        <div class="form-group">
+          <button class="btn btn-success btn-block" type="submit">确定</button>
+          <button type="button" class="btn btn-danger btn-block" (click)="btn_add = true; isCollapsedContent = !isCollapsedContent; isCollapsedContent1 = !isCollapsedContent1">取消</button>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
-
-
-<div>
-  hello world
-</div>
-
-<h3>Angular 2 Collapse HTML Content (IMAGE)</h3>
-<button type="button" class="btn btn-primary" (click)="isCollapsedImage = !isCollapsedImage">Show / Hide Image (Toggle collapse)
-                </button>
-<hr>
-<div [collapse]="isCollapsedImage" class="card card-block card-header">
-  <img src="http://www.angulartypescript.com/wp-content/uploads/2016/03/car3.jpg" alt="BMW 1">
-</div>
-
-
-
+-->
 
 <!--
 <div>

@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 import * as globals from './globals'
 
+var current_user;
+
 @Injectable()
 export class AuthenticationService {
     constructor(private http: Http) { }
@@ -18,7 +20,9 @@ export class AuthenticationService {
                     throw Observable.throw('username or password wrong');
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                 }
+                current_user = username;
                 localStorage.setItem('id_token', user.id_token);
+                localStorage.setItem('user', username);
                 //return response;
             });
     }
@@ -27,5 +31,13 @@ export class AuthenticationService {
         console.log('logout');
         // remove user from local storage to log user out
         localStorage.removeItem('id_token');
+    }
+
+    get_current_user() {
+        current_user = localStorage.getItem('user');
+        if (current_user == null) {
+            this.logout()
+        }
+        return current_user;
     }
 }

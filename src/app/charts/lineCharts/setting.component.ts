@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
 
+import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { AuthenticationService } from '../../_services/index';
+
 /*Angular 2 Collapse Example*/
 @Component({
   selector: 'app-charts',
@@ -12,6 +15,8 @@ export class SettingComponent {
   //collapse image (example)
   public isCollapsedImage: boolean = true;
 
+  current_user = '';
+
   user = {
     user: '',
     role: '',
@@ -20,6 +25,13 @@ export class SettingComponent {
 
   role = '';
   value = '';
+
+  op = 'l';
+  btn_add = true;
+  active_role = {
+    'id': 'admin',
+    'text': '管理员'
+  };
 
   role_list = [
     {
@@ -31,37 +43,73 @@ export class SettingComponent {
       'text': '普通用户'
     },
   ];
-  test_value = [
+  data = [
     {
-        user: 'kylin',
-        role: 'admin',
-        edit: '修改',
-        remove: '删除'
-      },
-      {
-        user: 'shuhm',
-        role: 'user',
-        edit: '修改',
-        remove: '删除'
-      },
+      user: 'kylin',
+      role: 'admin',
+      pass: '修改',
+    },
+    {
+      user: 'shuhm',
+      role: 'user',
+      pass: '修改',
+    },
   ]; //TableData;
-  test_label = [
-    { title: '用户', name: 'user', sort: '' },
-    { title: '角色', name: 'role', sort: '' },
-    { title: '操作', name: 'edit', sort: '' },
-    { title: '操作', name: 'remove', sort: '' },
-  ];
+
+  settings = {
+    columns: {
+      user: {
+        title: '用户'
+      },
+      role: {
+        title: '角色',
+        type: 'html',
+        editor: {
+          type: 'list',
+          config: {
+            list: [{ title: '管理员', value: 'admin' }, { title: '普通用户', value: 'user' }]
+          }
+        }
+      },
+      pass: {
+        title: '密码'
+      }
+    },
+    actions: {
+      columnTitle: '操作',
+    },
+    add: {
+      addButtonContent: '新建',
+      createButtonContent: '创建',
+      cancelButtonContent: '取消'
+    },
+    edit: {
+      editButtonContent: '编辑',
+      saveButtonContent: '更新',
+      cancelButtonContent: '取消'
+    },
+    delete: {
+      deleteButtonContent: '删除',
+      confirmDelete: true
+    },
+  };
 
   user_list = [];
   selectedEntry: { [key: string]: any } = {
     value: null,
     description: null
   };
-  
-  constructor() {
+
+  constructor(private authenticationService: AuthenticationService) {
   }
-  
+
   ngOnInit() {
+    this.op = 'a';
+    this.active_role = {
+      'id': 'admin',
+      'text': '管理员'
+    };
+
     this.user_list = [
       {
         name: 'kylin',
@@ -72,14 +120,24 @@ export class SettingComponent {
         role: 'user'
       },
     ];
-    
+
     // select the first one
-    if(this.user_list) {
-      this.onSelectionChange(this.user_list[0]);  
+    if (this.user_list) {
+      this.onSelectionChange(this.user_list[0]);
     }
-    
+
+    this.current_user = this.authenticationService.get_current_user();
   }
-  
+
+  onDeleteConfirm(event) {
+    console.log('delete?');
+    if (window.confirm('Are you sure you want to delete?')) {
+      event.confirm.resolve();
+    } else {
+      event.confirm.reject();
+    }
+  }
+
   onSelectionChange(entry) {
     // clone the object for immutability
     this.selectedEntry = Object.assign({}, this.selectedEntry, entry);
@@ -96,12 +154,12 @@ export class SettingComponent {
     console.log(this.user.user, this.user.role, this.user.pass);
   }
 
-  public refreshValueRole(value:any):void {
+  public refreshValueRole(value: any): void {
     this.value = value;
     console.log('refreshValue: ', this.value);
   }
 
-  public selected_role(value:any):void {
+  public selected_role(value: any): void {
     this.role = value;
     this.user.role = value.id;
     console.log('Selected value is: ', value);
