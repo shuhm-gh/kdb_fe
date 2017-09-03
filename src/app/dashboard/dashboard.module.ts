@@ -33,6 +33,7 @@ import { Shop_bookM_dataChartsComponent } from '../charts/lineCharts/shop_book-m
 import { M_shop_bookM_dataChartsComponent } from '../charts/lineCharts/m_shop_book-m_data.component';
 import { MonitorComponent } from '../charts/lineCharts/monitor.component';
 import { SettingComponent } from '../charts/lineCharts/setting.component';
+import { ButtonViewComponent } from '../charts/lineCharts/setting.component';
 import { Collapse } from './collapse.component';
 //import { pieChartsComponent } from '../charts/pieCharts/pieCharts.component';
 //import { DatatableComponent } from '../tables/datatable/datatable.component';
@@ -94,10 +95,12 @@ const tablesRoutes: Routes = [
         Shop_bookM_dataChartsComponent,
         MonitorComponent,
         SettingComponent,
+        ButtonViewComponent,
         //pieChartsComponent,
         //DatatableComponent,
         //BootstrapComponent,
         //PluginComponent
     ],
+    entryComponents:[ButtonViewComponent,]
 })
 export class DashboardModule { }

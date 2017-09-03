@@ -1,7 +1,42 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { ViewCell } from 'ng2-smart-table';
+
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Http, Headers, Response } from '@angular/http';
+import { DomSanitizer } from '@angular/platform-browser';
 
 import { Ng2SmartTableModule } from 'ng2-smart-table';
+import { LocalDataSource } from 'ng2-smart-table';
 import { AuthenticationService } from '../../_services/index';
+
+import { NavComponent } from '../../dashboard/nav.component';
+import * as globals from '../../_services/globals';
+
+
+@Component({
+  selector: 'button-view',
+  template: `
+    <button (click)="onClick()">{{ renderValue }}</button>
+  `,
+})
+export class ButtonViewComponent implements ViewCell, OnInit {
+  renderValue: string;
+
+  @Input() value: string | number;
+  @Input() rowData: any;
+
+  @Output() save: EventEmitter<any> = new EventEmitter();
+
+  ngOnInit() {
+    this.renderValue = this.value.toString().toUpperCase();
+    console.log('on init', this.renderValue, this.value, this.rowData);
+  }
+
+  onClick() {
+    this.save.emit(this.rowData);
+    console.log(this.value, this.rowData);
+  }
+}
 
 /*Angular 2 Collapse Example*/
 @Component({
@@ -15,12 +50,15 @@ export class SettingComponent {
   //collapse image (example)
   public isCollapsedImage: boolean = true;
 
-  current_user = '';
+  err_tip = '';
 
+  current_user = '';
+  password1 = '';
   user = {
     user: '',
+    name: '',
     role: '',
-    pass: ''
+    password: ''
   }
 
   role = '';
@@ -28,10 +66,7 @@ export class SettingComponent {
 
   op = 'l';
   btn_add = true;
-  active_role = {
-    'id': 'admin',
-    'text': '管理员'
-  };
+  active_role = {};
 
   role_list = [
     {
@@ -39,27 +74,21 @@ export class SettingComponent {
       'text': '管理员'
     },
     {
-      'id': 'normal',
+      'id': 'user',
       'text': '普通用户'
     },
   ];
-  data = [
-    {
-      user: 'kylin',
-      role: 'admin',
-      pass: '修改',
-    },
-    {
-      user: 'shuhm',
-      role: 'user',
-      pass: '修改',
-    },
-  ]; //TableData;
 
   settings = {
+    //mode: 'external',
+    //selectMode: 'multi',
     columns: {
       user: {
-        title: '用户'
+        title: '用户',
+        //editable: false
+      },
+      name: {
+        title: '姓名'
       },
       role: {
         title: '角色',
@@ -69,11 +98,33 @@ export class SettingComponent {
           config: {
             list: [{ title: '管理员', value: 'admin' }, { title: '普通用户', value: 'user' }]
           }
+        },
+        //editable: false
+      },
+      //password: {
+      //  title: '密码',
+      //  show: false
+      //}
+      
+      //checkbox: {
+      //  title: 'Re-Assiiiiign',
+      //  type: 'html',
+      //  valuePrepareFunction: (value) => { return this._sanitizer.bypassSecurityTrustHtml(this.input); },
+//
+      //  filter: false
+      //},
+
+      button: {
+        title: 'Button',
+        type: 'custom',
+        renderComponent: ButtonViewComponent,
+        onComponentInitFunction(instance) {
+          instance.save.subscribe(row => {
+            alert(`${row.name} saved!`)
+          });
         }
       },
-      pass: {
-        title: '密码'
-      }
+
     },
     actions: {
       columnTitle: '操作',
@@ -81,12 +132,16 @@ export class SettingComponent {
     add: {
       addButtonContent: '新建',
       createButtonContent: '创建',
-      cancelButtonContent: '取消'
+      cancelButtonContent: '取消',
+      confirmCreate: true,
+      mode: 'external',
     },
     edit: {
       editButtonContent: '编辑',
       saveButtonContent: '更新',
-      cancelButtonContent: '取消'
+      cancelButtonContent: '取消',
+      confirmSave: true,
+      mode: 'external',
     },
     delete: {
       deleteButtonContent: '删除',
@@ -94,13 +149,28 @@ export class SettingComponent {
     },
   };
 
-  user_list = [];
+  //user_list:Array<any> = [];
+  user_list = new LocalDataSource();
   selectedEntry: { [key: string]: any } = {
     value: null,
     description: null
   };
+  user_list1 = [
+    {
+      'user': 't',
+      'name': 't',
+      'role': 'user',
+    },
+  ];
 
-  constructor(private authenticationService: AuthenticationService) {
+  public input: string = '<input type="checkbox"></input>';
+
+  constructor(private parent: NavComponent,
+    private route: ActivatedRoute,
+    private router: Router,
+    private http: Http,
+    private authenticationService: AuthenticationService,
+    private _sanitizer: DomSanitizer) {
   }
 
   ngOnInit() {
@@ -110,32 +180,130 @@ export class SettingComponent {
       'text': '管理员'
     };
 
-    this.user_list = [
-      {
-        name: 'kylin',
-        role: 'admin'
-      },
-      {
-        name: 'shuhm',
-        role: 'user'
-      },
-    ];
+    //this.user_list = [
+    //  {
+    //      name: "测试",
+    //      password: "111111",
+    //      role: "user",
+    //      user: "test"
+    //    }
+    //];
 
     // select the first one
-    if (this.user_list) {
-      this.onSelectionChange(this.user_list[0]);
-    }
+    //if (this.user_list) {
+    //  this.onSelectionChange(this.user_list[0]);
+    //}
 
     this.current_user = this.authenticationService.get_current_user();
+    if (this.current_user == 'admin') {
+      this.active_role = {
+        'id': 'admin',
+        'text': '管理员'
+      };
+      this.query_user_list().then();
+    }
+    else {
+      this.active_role = {
+        'id': 'user',
+        'text': '普通用户'
+      };
+    }
   }
+
+  query_user_list() {
+    return this.http.post(globals.api_base_url + '/api/query_user_list', JSON.stringify({}), { withCredentials: true })
+      .map((response: Response) => {
+        // login successful if there's a jwt token in the response
+        let res = response.json();
+        this.user_list1 = res.list;
+        for (var i=0; i<res.list.length; i++) {
+          res.list[i].button = '修改密码';
+        }
+        this.user_list.load(res.list);
+        //var _user_list = this.user_list.getAll().then();
+        //console.log(_user_list);
+        //for (var user in _user_list) {
+        //  console.log(user);
+        //}
+        //for (var i=0; i<this.user_list.data.length; i++) {
+        //  if (this.user_list.data[i].user == this.current_user) {
+        //    this.user = this.user_list.data[i];
+        //  }
+        //}
+        console.log(this.user_list);
+      }).toPromise();
+  }
+
+  delete(user) {
+    return this.http.post(globals.api_base_url + '/api/delete_user', JSON.stringify({ user: user }), { withCredentials: true })
+      .map((response: Response) => {
+        // login successful if there's a jwt token in the response
+        let res = response.json();
+        console.log(res);
+      }).toPromise();
+  }
+
+  add(user) {
+    return this.http.post(globals.api_base_url + '/api/add_user', JSON.stringify(user), { withCredentials: true })
+      .map((response: Response) => {
+        // login successful if there's a jwt token in the response
+        let res = response.json();
+        console.log(res);
+      }).toPromise();
+  }
+
+  edit(user) {
+    return this.http.post(globals.api_base_url + '/api/edit_user', JSON.stringify(user), { withCredentials: true })
+      .map((response: Response) => {
+        // login successful if there's a jwt token in the response
+        let res = response.json();
+        console.log(res);
+      }).toPromise();
+  }
+
+  changePassword() {
+    console.log(this.user.password, this.password1);
+    if (this.user.password != this.password1) {
+      this.err_tip = '密码不一致, 请重新输入!';
+      return;
+    }
+    return this.http.post(globals.api_base_url + '/api/change_password', JSON.stringify({ user: this.current_user, password: this.user.password }), { withCredentials: true })
+      .map((response: Response) => {
+        // login successful if there's a jwt token in the response
+        let res = response.json();
+        console.log(res);
+      }).toPromise();
+  }
+
 
   onDeleteConfirm(event) {
     console.log('delete?');
-    if (window.confirm('Are you sure you want to delete?')) {
+    if (window.confirm('确定删除该用户?')) {
+      console.log(event);
       event.confirm.resolve();
+      this.delete(event.data.user);
     } else {
       event.confirm.reject();
     }
+  }
+
+  onCreateConfirm(event) {
+    event.confirm.resolve();
+    console.log(event);
+    this.add(event.newData);
+    //this.user_list.load(event.source.data);
+    console.log(this.user_list);
+  }
+
+  onEditConfirm(event) {
+    event.confirm.resolve();
+    console.log(event);
+    this.edit(event.newData);
+    console.log(this.user_list);
+  }
+
+  onUserRowSelect($event): void {
+    console.log(event);
   }
 
   onSelectionChange(entry) {
@@ -146,12 +314,9 @@ export class SettingComponent {
   remove(entry) {
     console.log(entry);
   }
+
   modify(entry) {
     console.log(entry);
-  }
-
-  add(info) {
-    console.log(this.user.user, this.user.role, this.user.pass);
   }
 
   public refreshValueRole(value: any): void {
@@ -163,6 +328,11 @@ export class SettingComponent {
     this.role = value;
     this.user.role = value.id;
     console.log('Selected value is: ', value);
+  }
+
+  public focus() {
+    this.err_tip = ' ';
+    console.log('focus...')
   }
 
 }
