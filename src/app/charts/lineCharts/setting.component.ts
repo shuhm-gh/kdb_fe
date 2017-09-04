@@ -57,12 +57,13 @@ export class SettingComponent {
 
   current_user = '';
   password1 = '';
-  user = {
+  user_null = {
     user: '',
     name: '',
     role: '',
     password: ''
   }
+  user = this.user_null;
 
   role = '';
   value = '';
@@ -171,13 +172,7 @@ export class SettingComponent {
   //  value: null,
   //  description: null
   //};
-  user_list1 = [
-    {
-      'user': 't',
-      'name': 't',
-      'role': 'user',
-    },
-  ];
+  user_list1 = [];
   //modalActions = new EventEmitter<string|MaterializeAction>();
 
   public input: string = '<input type="checkbox"></input>';
@@ -223,6 +218,14 @@ export class SettingComponent {
         // login successful if there's a jwt token in the response
         let res = response.json();
         this.user_list1 = res.list;
+        this.user_list1.map(user => {
+          if (user.role == 'admin') {
+            user.role = '管理员';
+          }
+          else {
+            user.role = '普通用户';
+          }
+        });
         console.log(this.user_list1);
         //for (var i=0; i<res.list.length; i++) {
         //  res.list[i].button = '修改密码';
@@ -244,6 +247,9 @@ export class SettingComponent {
   }
 
   delete(user) {
+    if (user == 'admin') {
+      return;
+    }
     if (window.confirm('确定删除该用户?')) {
       return this.http.post(globals.api_base_url + '/api/delete_user', JSON.stringify({ user: user }), { withCredentials: true })
         .map((response: Response) => {
@@ -251,6 +257,7 @@ export class SettingComponent {
           let res = response.json();
           console.log('/api/delete_user', res);
           this.user_list1 = this.user_list1.filter(obj => obj.user !== user);
+          this.user = this.user_null;
         }).toPromise();
     }
   }
@@ -262,12 +269,20 @@ export class SettingComponent {
       console.log('existed');
       return;
     }
+    this.user.role = 'user';
     return this.http.post(globals.api_base_url + '/api/add_user', JSON.stringify(this.user), { withCredentials: true })
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         let res = response.json();
         console.log('/api/add_user', res);
-        this.user_list1.push(this.user);
+        if (this.user.role == 'admin') {
+          this.user.role = '管理员';
+        }
+        else {
+          this.user.role = '普通用户';
+        }
+        this.user_list1.push(Object.assign({}, this.user));
+        this.user = this.user_null;
         //this.toast();
       }).toPromise();
   }
@@ -285,22 +300,24 @@ export class SettingComponent {
             Object.keys(this.user).forEach((key) => obj[key] = this.user[key]);
           }
         });
+        this.user = this.user_null;
       }).toPromise();
   }
 
   changePassword() {
-    var m = {};
+    //var m = {};
 
-    console.log(this.user.password, this.password1);
-    if (this.user.password != this.password1) {
-      this.err_tip = '密码不一致, 请重新输入!';
-      return;
-    }
-    return this.http.post(globals.api_base_url + '/api/change_password', JSON.stringify({ user: this.current_user, password: this.user.password }), { withCredentials: true })
+    //console.log(this.user.password, this.password1);
+    //if (this.user.password != this.password1) {
+    //  this.err_tip = '密码不一致, 请重新输入!';
+    //  return;
+    //}
+    return this.http.post(globals.api_base_url + '/api/change_password', JSON.stringify({ user: this.current_user, password: this.password1 }), { withCredentials: true })
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         let res = response.json();
         console.log(res);
+        alert('密码修改成功');
       }).toPromise();
   }
 
