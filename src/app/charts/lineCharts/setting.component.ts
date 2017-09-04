@@ -69,7 +69,14 @@ export class SettingComponent {
 
   op = 'l';
   btn_add = true;
-  active_role = {};
+  active_role = {
+        'id': 'user',
+        'text': '普通用户'
+      };
+  admin_role = {
+    'id':'admin',
+    'text':'管理员'
+  }
 
   role_list = [
     {
@@ -191,10 +198,6 @@ export class SettingComponent {
 
   ngOnInit() {
     this.op = 'a';
-    this.active_role = {
-      'id': 'admin',
-      'text': '管理员'
-    };
 
     //this.user_list = [
     //  {
@@ -209,21 +212,8 @@ export class SettingComponent {
     //if (this.user_list) {
     //  this.onSelectionChange(this.user_list[0]);
     //}
-
+    this.query_user_list().then();
     this.current_user = this.authenticationService.get_current_user();
-    if (this.current_user == 'admin') {
-      this.active_role = {
-        'id': 'admin',
-        'text': '管理员'
-      };
-      this.query_user_list().then();
-    }
-    else {
-      this.active_role = {
-        'id': 'user',
-        'text': '普通用户'
-      };
-    }
     //this.toast();
   }
 
@@ -233,9 +223,10 @@ export class SettingComponent {
         // login successful if there's a jwt token in the response
         let res = response.json();
         this.user_list1 = res.list;
-        for (var i=0; i<res.list.length; i++) {
-          res.list[i].button = '修改密码';
-        }
+        console.log(this.user_list1);
+        //for (var i=0; i<res.list.length; i++) {
+        //  res.list[i].button = '修改密码';
+        //}
         //this.user_list.load(res.list);
 
         //var _user_list = this.user_list.getAll().then();
@@ -253,34 +244,53 @@ export class SettingComponent {
   }
 
   delete(user) {
-    return this.http.post(globals.api_base_url + '/api/delete_user', JSON.stringify({ user: user }), { withCredentials: true })
-      .map((response: Response) => {
-        // login successful if there's a jwt token in the response
-        let res = response.json();
-        console.log(res);
-      }).toPromise();
+    if (window.confirm('确定删除该用户?')) {
+      return this.http.post(globals.api_base_url + '/api/delete_user', JSON.stringify({ user: user }), { withCredentials: true })
+        .map((response: Response) => {
+          // login successful if there's a jwt token in the response
+          let res = response.json();
+          console.log('/api/delete_user', res);
+          this.user_list1 = this.user_list1.filter(obj => obj.user !== user);
+        }).toPromise();
+    }
   }
 
   add() {
+    console.log('add:', this.user);
+    var e = this.user_list1.find(obj => obj.user == this.user.user);
+    if (e) {
+      console.log('existed');
+      return;
+    }
     return this.http.post(globals.api_base_url + '/api/add_user', JSON.stringify(this.user), { withCredentials: true })
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         let res = response.json();
-        console.log(res);
+        console.log('/api/add_user', res);
+        this.user_list1.push(this.user);
         //this.toast();
       }).toPromise();
   }
 
   edit(user) {
-    return this.http.post(globals.api_base_url + '/api/edit_user', JSON.stringify({'user':this.user.user, 'password':this.user.password}), { withCredentials: true })
+    Object.keys(this.user).forEach((key) => (this.user[key] == null || this.user[key] == '') && delete this.user[key]);
+    return this.http.post(globals.api_base_url + '/api/edit_user', JSON.stringify(this.user), { withCredentials: true })
       .map((response: Response) => {
         // login successful if there's a jwt token in the response
         let res = response.json();
-        console.log(res);
+        console.log('/api/edit_user', res);
+        this.user_list1.map(obj => {
+          if (obj.user == this.user.user) {
+            console.log(user);
+            Object.keys(this.user).forEach((key) => obj[key] = this.user[key]);
+          }
+        });
       }).toPromise();
   }
 
   changePassword() {
+    var m = {};
+
     console.log(this.user.password, this.password1);
     if (this.user.password != this.password1) {
       this.err_tip = '密码不一致, 请重新输入!';

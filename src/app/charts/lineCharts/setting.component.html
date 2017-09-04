@@ -25,7 +25,7 @@
           <td width=25%>
           -->
             <button style="float:right" type="button" class="btn btn-danger custom-button-width .navbar-right" (click)="delete(entry.user)">删除</button>
-            <button style="float:right" type="button" class="btn btn-success custom-button-width .navbar-right" (click)="user.user = entry.user; btn_add = false; isCollapsedContent = !isCollapsedContent; isCollapsedContent1 = !isCollapsedContent1; flag_add='e'">修改</button>
+            <button style="float:right" type="button" class="btn btn-success custom-button-width .navbar-right" (click)="user.user = entry.user; user.name = entry.name; user.role = entry.role; btn_add = false; isCollapsedContent = !isCollapsedContent; isCollapsedContent1 = !isCollapsedContent1; flag_add='e'">修改</button>
           </td>
         </tr>
       </tbody>
@@ -45,13 +45,17 @@
         <input type="text" title="请输入用户名" [(ngModel)]="user.user" name="_username" id="username" class="form-control mr-sm-2" required>
       </div>
       <div class="form-group">
+        <label class="control-label" for="username">姓名</label>
+        <input type="text" title="请输入用户名" [(ngModel)]="user.name" name="_username" id="username" class="form-control mr-sm-2" required>
+      </div>
+      <div class="form-group">
         <label class="control-label" for="password">密码</label>
         <input type="password" title="请输入密码" [(ngModel)]="user.password" name="_password" id="password" class="form-control mr-sm-2"
           required>
       </div>
       <div class="form-group">
         <label class="control-label">角色</label>
-        <ng-select [allowClear]="true" [items]="role_list" [disabled]="disabled" (data)="refreshValueRole($event)" (selected)="selected_role($event)"
+        <ng-select [allowClear]="true" [items]="role_list" [active]="[active_role]" [disabled]="true" (data)="refreshValueRole($event)" (selected)="selected_role($event)"
           (removed)="removed($event)" (typed)="typed($event)">
         </ng-select>
       </div>
@@ -68,13 +72,21 @@
           mr-sm-2" readonly="readonly" required>
       </div>
       <div class="form-group">
+        <label class="control-label" for="username">姓名</label>
+        <input type="text" title="请输入用户名" [(ngModel)]="user.name" name="_username" id="username" class="form-control
+          mr-sm-2" required>
+      </div>
+      <div class="form-group">
         <label class="control-label" for="password">密码</label>
         <input type="password" title="请输入密码" [(ngModel)]="user.password" name="_password" id="password" class="form-control
           mr-sm-2" required>
       </div>
       <div class="form-group">
         <label class="control-label">角色</label>
-        <ng-select [allowClear]="false" [items]="role_list" [active]="[active_role]" [disabled]="true" (data)="refreshValueRole($event)"
+        <ng-select *ngIf="user.user === 'admin'" [allowClear]="false" [items]="role_list" [active]="[admin_role]" [disabled]="true" (data)="refreshValueRole($event)"
+          (selected)="selected_role($event)" (removed)="removed($event)" (typed)="typed($event)">
+        </ng-select>
+        <ng-select *ngIf="user.user !== 'admin'" [allowClear]="false" [items]="role_list" [active]="[active_role]" [disabled]="true" (data)="refreshValueRole($event)"
           (selected)="selected_role($event)" (removed)="removed($event)" (typed)="typed($event)">
         </ng-select>
       </div>
