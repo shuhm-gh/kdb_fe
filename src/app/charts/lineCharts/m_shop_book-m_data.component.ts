@@ -41,7 +41,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let res = response.json();
-                console.log(res);
+                console.log('get_data: ', res, res.data.length);
 
                 //datatype
                 this.datatype_list = res.datatype_list
@@ -64,7 +64,7 @@ export class M_shop_bookM_dataChartsComponent implements OnInit {
                 //let _tags: Array<string>;
 
                 // 曲线图数据
-                if (res.data.length > 0) {
+                if (res.data.data.length > 0) {
                   for (let i = 0; i < res.data.data.length; i++) {
                     let _item = res.data.data[i];
                     let _data: Array<any> = [{ data: [], label: '' }];
