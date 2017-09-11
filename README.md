@@ -1,4 +1,6 @@
 ## kdb
+original repo https://github.com/taoziUncle/ng2-admin-master.git
+
 kdb, build with angular-cli, compile with bootstrap 、ng2-charts and ng2-smart-table. 
 
 1 Install node.js and angular-cli
